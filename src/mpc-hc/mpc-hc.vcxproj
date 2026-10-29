@@ -113,7 +113,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="$(Configuration.Contains('Lite'))">
     <Link>
-      <AdditionalDependencies>AudioSwitcher.lib;BaseClasses.lib;CmdUI.lib;DeCSS.lib;DSUtil.lib;Filters.lib;lcms2.lib;ResizableLib.lib;sizecbar.lib;StreamDriveThru.lib;SubPic.lib;Subtitles.lib;SubtitleSource.lib;SyncClock.lib;TreePropSheet.lib;unrar.lib;VideoRenderers.lib;zlib.lib;minhook.lib;tinyxml2.lib;RARFileSource.lib;MpcAudioRenderer.lib;AudioTools.lib;ffmpeg.lib;freetype2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AudioSwitcher.lib;BaseClasses.lib;CmdUI.lib;mpc-core.lib;DeCSS.lib;DSUtil.lib;Filters.lib;lcms2.lib;ResizableLib.lib;sizecbar.lib;StreamDriveThru.lib;SubPic.lib;Subtitles.lib;SubtitleSource.lib;SyncClock.lib;TreePropSheet.lib;unrar.lib;VideoRenderers.lib;zlib.lib;minhook.lib;tinyxml2.lib;RARFileSource.lib;MpcAudioRenderer.lib;AudioTools.lib;ffmpeg.lib;freetype2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <PreprocessorDefinitions>MPCHC_LITE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -726,6 +726,9 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     </ProjectReference>
     <ProjectReference Include="..\CmdUI\CmdUI.vcxproj">
       <Project>{03208025-d5c2-426a-b0fa-251d4338f30c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\core\mpc-core.vcxproj">
+      <Project>{f969c32c-eab8-42a2-b290-c60903a74af3}</Project>
     </ProjectReference>
     <ProjectReference Include="..\thirdparty\ResizableLib\ResizableLib.vcxproj">
       <Project>{4cc7ae86-3e0a-430a-bff4-bf00204cafb0}</Project>
