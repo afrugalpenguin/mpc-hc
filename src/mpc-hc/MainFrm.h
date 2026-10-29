@@ -1248,8 +1248,6 @@ public:
 
     LRESULT OnMPCVRSwitchFullscreen(WPARAM wParam, LPARAM lParam);
 
-    CMPC_Lcd m_Lcd;
-
     CMouseWndWithArtView*  m_pVideoWnd;            // Current Video (main display screen or 2nd)
     CWnd*                  m_pOSDWnd;
     CPreView               m_wndPreView;           // SeekPreview

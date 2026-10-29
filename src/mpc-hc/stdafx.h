@@ -73,7 +73,6 @@ namespace Gdiplus
 #include "ResizableLib/ResizableDialog.h"
 #include "BaseClasses/streams.h"
 
-#include "LcdSupport.h"
 
 template <class T = CString, class S = CString>
 class CAtlStringMap : public CAtlMap<S, T, CStringElementTraits<S>> {};

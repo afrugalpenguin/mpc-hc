@@ -1127,9 +1127,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
     ShowTrayIcon(s.fTrayIcon);
 
-    m_Lcd.SetVolumeRange(0, 100);
-    m_Lcd.SetVolume(std::max(1, s.nVolume));
-
     m_pGraphThread = (CGraphThread*)AfxBeginThread(RUNTIME_CLASS(CGraphThread));
     if (m_pGraphThread) {
         m_pGraphThread->SetMainFrame(this);
@@ -2520,8 +2517,6 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                 m_wndSeekBar.UpdateTime();
                 m_OSD.SetRange(rtDur);
                 m_OSD.SetPos(rtNow);
-                m_Lcd.SetMediaRange(0, rtDur);
-                m_Lcd.SetMediaPos(rtNow);
 
                 if (m_pCAP) {
                     if (g_bExternalSubtitleTime) {
@@ -4644,8 +4639,6 @@ void CMainFrame::OnFilePostClosemedia(bool bNextIsQueued/* = false*/)
     currentSubLang.Empty();
     m_OSD.SetRange(0);
     m_OSD.SetPos(0);
-    m_Lcd.SetMediaRange(0, 0);
-    m_Lcd.SetMediaPos(0);
     m_statusbarVideoFormat.Empty();
     m_statusbarVideoSize.Empty();
 
@@ -9662,7 +9655,6 @@ void CMainFrame::OnPlayPlay()
         SetTimersPlay();
     }
 
-    m_Lcd.SetStatusMessage(ResStr(IDS_CONTROLS_PLAYING), 3000);
     SetPlayState(PS_PLAY);
 
     OnTimer(TIMER_STREAMPOSPOLLER);
@@ -9739,7 +9731,6 @@ void CMainFrame::OnPlayPause()
         strOSD.Delete(i, strOSD.GetLength() - i);
     }
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
-    m_Lcd.SetStatusMessage(ResStr(IDS_CONTROLS_PAUSED), 3000);
     SetPlayState(PS_PAUSE);
 }
 
@@ -9868,7 +9859,6 @@ void CMainFrame::OnPlayStop(bool is_closing)
             strOSD.Delete(i, strOSD.GetLength() - i);
         }
         m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
-        m_Lcd.SetStatusMessage(ResStr(IDS_CONTROLS_STOPPED), 3000);
     } else {
         m_fEndOfStream = false;
     }
@@ -10973,8 +10963,6 @@ void CMainFrame::OnPlayVolume(UINT nID)
     if (!changed) {
         return;
     }
-
-    m_Lcd.SetVolume(mute ? 1 : volume);
 
     SendCurrentVolumeToApi();
     SendCurrentMuteToApi();
@@ -15920,7 +15908,6 @@ void CMainFrame::OpenSetupWindowTitle(bool reset /*= false*/)
     }
 
     SetWindowText(title);
-    m_Lcd.SetMediaTitle(title);
 }
 
 // Called from GraphThread
@@ -19514,8 +19501,6 @@ void CMainFrame::SendStatusMessage(CString msg, int nTimeOut, bool bRevealStatus
             ShowStatusBarForMessage();
         }
     }
-
-    m_Lcd.SetStatusMessage(msg, nTimeOut);
 }
 
 bool CMainFrame::CanPreviewUse() {
@@ -20487,7 +20472,6 @@ inline bool CMainFrame::IsStateClosingAborting()
 
 void CMainFrame::SetPlayState(MPC_PLAYSTATE iState)
 {
-    m_Lcd.SetPlayState((CMPC_Lcd::PlayState)iState);
     SendApiNotify(CMD_PLAYMODE, iState);
 
     if (m_fEndOfStream) {

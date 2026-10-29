@@ -828,7 +828,6 @@ public:
     bool            fShowChapters;
     bool            fPreventMinimize;
     bool            bUseEnhancedTaskBar;
-    bool            fLCDSupport;
     bool            fSeekPreview;
     int             iSeekPreviewSize;
     bool            fUseSearchInFolder;
