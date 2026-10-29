@@ -689,17 +689,6 @@ public:
     BOOL            fLogoColorProfileEnabled;
     CString         strLogoFileName;
 
-    // Web Inteface
-    bool            fEnableWebServer;
-    int             nWebServerPort;
-    int             nCmdlnWebServerPort;
-    bool            fWebServerUseCompression;
-    bool            fWebServerLocalhostOnly;
-    bool            bWebUIEnablePreview;
-    bool            fWebServerPrintDebugInfo;
-    CString         strWebRoot, strWebDefIndex;
-    CString         strWebServerCGI;
-
     // Playback
     int             nVolume;
     bool            fMute;

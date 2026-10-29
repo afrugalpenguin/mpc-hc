@@ -41,12 +41,6 @@
       <UniqueIdentifier>{ee8489ea-968c-44c9-ae3a-35eb518513d2}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
-    <Filter Include="Resource Files\web">
-      <UniqueIdentifier>{26bd0b2a-4fea-4c63-b05b-f28243ac8d95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\web\img">
-      <UniqueIdentifier>{85c6230e-fa6b-497b-8d98-d4a066c86f48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\shaders">
       <UniqueIdentifier>{662236d7-ad89-4026-bb57-bb27667da2e6}</UniqueIdentifier>
     </Filter>
@@ -61,9 +55,6 @@
     </Filter>
     <Filter Include="Property Dialogs\File Properties\Pages">
       <UniqueIdentifier>{4a9b9989-f6a5-499e-9611-c7bfe024b7a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Integration\Web">
-      <UniqueIdentifier>{d7f40587-25b5-46f1-90bb-6751caca4922}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modal Dialogs">
       <UniqueIdentifier>{c80b5d75-ba77-444e-98a0-c5af5d89a88c}</UniqueIdentifier>
@@ -304,9 +295,6 @@
     <ClCompile Include="PPageTweaks.cpp">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="PPageWebServer.cpp">
-      <Filter>Property Dialogs\Player Options\Pages</Filter>
-    </ClCompile>
     <ClCompile Include="RegFilterChooserDlg.cpp">
       <Filter>Modal Dialogs</Filter>
     </ClCompile>
@@ -372,15 +360,6 @@
     </ClCompile>
     <ClCompile Include="VolumeCtrl.cpp">
       <Filter>Custom Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="WebClientSocket.cpp">
-      <Filter>Integration\Web</Filter>
-    </ClCompile>
-    <ClCompile Include="WebServer.cpp">
-      <Filter>Integration\Web</Filter>
-    </ClCompile>
-    <ClCompile Include="WebServerSocket.cpp">
-      <Filter>Integration\Web</Filter>
     </ClCompile>
     <ClCompile Include="WinHotkeyCtrl.cpp">
       <Filter>Custom Controls</Filter>
@@ -868,9 +847,6 @@
     <ClInclude Include="PPageSubStyle.h">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
     </ClInclude>
-    <ClInclude Include="PPageWebServer.h">
-      <Filter>Property Dialogs\Player Options\Pages</Filter>
-    </ClInclude>
     <ClInclude Include="PPageSubtitles.h">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
     </ClInclude>
@@ -954,15 +930,6 @@
     </ClInclude>
     <ClInclude Include="VolumeCtrl.h">
       <Filter>Custom Controls</Filter>
-    </ClInclude>
-    <ClInclude Include="WebClientSocket.h">
-      <Filter>Integration\Web</Filter>
-    </ClInclude>
-    <ClInclude Include="WebServer.h">
-      <Filter>Integration\Web</Filter>
-    </ClInclude>
-    <ClInclude Include="WebServerSocket.h">
-      <Filter>Integration\Web</Filter>
     </ClInclude>
     <ClInclude Include="WinHotkeyCtrl.h">
       <Filter>Custom Controls</Filter>
@@ -1340,126 +1307,6 @@
     </None>
     <None Include="res\toolbar.bmp">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\web\404.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\browser.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\controls.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\default.css">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\index.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\info.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\javascript.js">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\player.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\variables.html">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\favicon.ico">
-      <Filter>Resource Files\web</Filter>
-    </None>
-    <None Include="res\web\img\1pix.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\bottomside.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlback.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttondecrate.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonincrate.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonpause.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonplay.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonskipback.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonskipforward.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonstep.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlbuttonstop.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlvolumebar.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlvolumegrip.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlvolumeoff.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\controlvolumeon.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\headerback.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\headerclose.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\headericon.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\leftbottomside.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\leftside.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\rightbottomside.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\rightside.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\seekbargrip.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\seekbarleft.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\seekbarmid.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\seekbarright.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\sliderback.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\slidergrip.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\vbg.png">
-      <Filter>Resource Files\web\img</Filter>
-    </None>
-    <None Include="res\web\img\vbs.png">
-      <Filter>Resource Files\web\img</Filter>
     </None>
     <None Include="res\tickcross.png">
       <Filter>Resource Files</Filter>

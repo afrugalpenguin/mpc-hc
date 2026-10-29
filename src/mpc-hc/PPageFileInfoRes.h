@@ -60,5 +60,4 @@ protected:
 
     afx_msg void OnSaveAs();
     afx_msg void OnUpdateSaveAs(CCmdUI* pCmdUI);
-    afx_msg void OnOpenEmbeddedResInBrowser(NMHDR* pNMHDR, LRESULT* pResult);
 };
