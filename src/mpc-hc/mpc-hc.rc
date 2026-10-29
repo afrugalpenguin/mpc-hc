@@ -68,48 +68,6 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,170,28,50,14
 END
 
-IDD_CAPTURE_DLG DIALOGEX 0, 0, 132, 293
-STYLE DS_SETFONT | WS_CHILD
-FONT 9, "Segoe UI", 400, 0, 0x1
-BEGIN
-    GROUPBOX        "Video",IDC_STATIC1,5,5,117,57
-    COMBOBOX        IDC_COMBO4,10,15,65,116,CBS_DROPDOWNLIST | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_EDIT3,77,15,40,13,ES_RIGHT | ES_AUTOHSCROLL | WS_DISABLED
-    COMBOBOX        IDC_COMBO1,10,30,40,89,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO5,52,30,65,89,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_EDIT1,10,45,34,13,ES_RIGHT | ES_AUTOHSCROLL
-    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | WS_DISABLED,32,45,12,13
-    EDITTEXT        IDC_EDIT2,46,45,34,13,ES_RIGHT | ES_AUTOHSCROLL
-    CONTROL         "",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | WS_DISABLED,68,45,12,13
-    PUSHBUTTON      "Set",IDC_BUTTON1,82,45,35,13
-    GROUPBOX        "Audio",IDC_STATIC,6,64,116,42
-    COMBOBOX        IDC_COMBO3,10,74,65,116,CBS_DROPDOWNLIST | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO2,77,74,40,89,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO6,10,89,107,118,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Output",IDC_STATIC,5,107,117,179
-    CONTROL         "Record Video",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,116,107,8
-    CONTROL         "Preview",IDC_CHECK2,"Button",BS_AUTO3STATE | WS_TABSTOP,10,126,107,8
-    COMBOBOX        IDC_COMBO7,10,136,107,62,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO9,10,151,40,89,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO10,52,151,65,116,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,10,167,110,1
-    CONTROL         "Record Audio",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,169,107,8
-    CONTROL         "Preview",IDC_CHECK4,"Button",BS_AUTO3STATE | WS_TABSTOP,10,179,107,8
-    COMBOBOX        IDC_COMBO8,10,189,107,50,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO12,10,204,40,50,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_COMBO11,52,204,65,50,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,10,219,110,1
-    LTEXT           "V/A Buffers:",IDC_STATIC,10,223,45,8
-    EDITTEXT        IDC_EDIT5,59,221,28,13,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
-    EDITTEXT        IDC_EDIT6,89,221,28,13,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,10,236,110,1
-    EDITTEXT        IDC_EDIT4,10,239,91,13,ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "...",IDC_BUTTON3,103,239,14,13
-    CONTROL         "Audio to wav",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,272,60,8
-    PUSHBUTTON      "Record",IDC_BUTTON2,75,270,42,13,WS_DISABLED | WS_GROUP
-    COMBOBOX        IDC_COMBO14,10,254,107,18,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-END
-
 IDD_PPAGEAUDIOSWITCHER DIALOGEX 0, 0, 355, 309
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x1
@@ -782,63 +740,6 @@ BEGIN
     PUSHBUTTON      "Export",IDC_EXPORT_SETTINGS,240,72,103,14
 END
 
-IDD_TUNER_SCAN DIALOGEX 0, 0, 407, 246
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Tuner scan"
-FONT 9, "Segoe UI", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "Start",ID_START,244,227,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,352,227,50,14
-    CONTROL         "",IDC_STRENGTH,"msctls_progress32",PBS_VERTICAL | WS_BORDER,373,51,10,158
-    CONTROL         "",IDC_QUALITY,"msctls_progress32",PBS_VERTICAL | WS_BORDER,387,51,10,158
-    CONTROL         "",IDC_CHANNEL_LIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,5,51,343,158
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,213,343,10
-    EDITTEXT        IDC_FREQ_START,84,5,40,13,ES_AUTOHSCROLL
-    LTEXT           "Freq. Start",IDC_STATIC,5,7,75,8
-    EDITTEXT        IDC_BANDWIDTH,84,20,40,12,ES_AUTOHSCROLL
-    LTEXT           "Bandwidth",IDC_STATIC,5,22,75,8
-    EDITTEXT        IDC_FREQ_END,211,5,40,12,ES_AUTOHSCROLL
-    LTEXT           "Freq. End",IDC_STATIC,132,7,75,8
-    CONTROL         "Ignore encrypted channels",IDC_CHECK_IGNORE_ENCRYPTED,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,259,7,138,8
-    DEFPUSHBUTTON   "Save",ID_SAVE,298,227,50,14
-    LTEXT           "S",IDC_STATIC,375,37,8,8
-    LTEXT           "Q",IDC_STATIC,389,37,8,8
-    CONTROL         "Use an offset",IDC_CHECK_OFFSET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,132,21,75,8
-    EDITTEXT        IDC_OFFSET,211,20,40,12,ES_AUTOHSCROLL
-    LTEXT           "Symbol Rate",IDC_STATIC,5,37,75,8
-    EDITTEXT        IDC_SYMBOLRATE,84,35,40,12,ES_AUTOHSCROLL
-END
-
-IDD_PPAGECAPTURE DIALOGEX 0, 0, 355, 289
-STYLE DS_SETFONT | WS_CHILD
-FONT 9, "Segoe UI", 400, 0, 0x1
-BEGIN
-    GROUPBOX        "Default Device",IDC_STATIC,6,6,343,29
-    CONTROL         "Analog",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,109,20,66,8
-    CONTROL         "Digital",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,180,20,66,8
-    GROUPBOX        "Analog settings",IDC_STATIC,6,40,343,71,WS_GROUP
-    LTEXT           "Video",IDC_STATIC1,12,56,89,8
-    COMBOBOX        IDC_COMBO1,101,54,242,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Audio",IDC_STATIC2,12,74,89,8
-    COMBOBOX        IDC_COMBO2,101,72,242,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Country",IDC_STATIC3,12,92,89,8
-    COMBOBOX        IDC_COMBO9,101,90,242,102,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Digital settings (BDA)",IDC_STATIC,6,115,343,169
-    LTEXT           "Network Provider",IDC_STATIC4,12,132,89,8
-    COMBOBOX        IDC_COMBO4,101,130,242,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Tuner",IDC_STATIC5,12,150,89,8
-    COMBOBOX        IDC_COMBO5,101,148,242,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Receiver",IDC_STATIC6,12,168,89,8
-    COMBOBOX        IDC_COMBO3,101,166,242,30,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Channel switching approach:",IDC_PPAGECAPTURE_ST10,12,190,312,8
-    LTEXT           "Rebuild filter graph",IDC_PPAGECAPTURE_ST11,12,206,89,16
-    EDITTEXT        IDC_PPAGECAPTURE_DESC1,101,221,242,20,ES_MULTILINE | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP
-    COMBOBOX        IDC_COMBO6,101,204,241,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Stop filter graph",IDC_PPAGECAPTURE_ST12,12,247,89,16
-    COMBOBOX        IDC_COMBO7,101,245,241,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-END
-
 IDD_PPAGEVIDEORENDERER DIALOGEX 0, 0, 355, 312
 STYLE DS_SETFONT | WS_CHILD
 FONT 9, "Segoe UI", 400, 0, 0x1
@@ -913,16 +814,6 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,259,331,8
     CONTROL         "Restore resolution on program exit",IDC_RESTORERESCHECK,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,272,331,8
-END
-
-IDD_NAVIGATION_DLG DIALOGEX 0, 0, 93, 60
-STYLE DS_SETFONT | WS_CHILD
-FONT 9, "Segoe UI", 400, 0, 0x1
-BEGIN
-    LISTBOX         IDC_LISTCHANNELS,3,3,87,23,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Info",IDC_NAVIGATION_INFO,3,30,40,14,WS_DISABLED
-    PUSHBUTTON      "Scan",IDC_NAVIGATION_SCAN,51,30,40,14
-    PUSHBUTTON      "",IDC_NAVIGATION_FILTERSTATIONS,3,46,88,13
 END
 
 IDD_PPAGESUBMISC DIALOGEX 0, 0, 355, 289
@@ -1261,11 +1152,6 @@ BEGIN
     BEGIN
     END
 
-    IDD_CAPTURE_DLG, DIALOG
-    BEGIN
-        VERTGUIDE, 10
-    END
-
     IDD_PPAGEAUDIOSWITCHER, DIALOG
     BEGIN
         VERTGUIDE, 124
@@ -1414,16 +1300,6 @@ BEGIN
         VERTGUIDE, 69
     END
 
-    IDD_TUNER_SCAN, DIALOG
-    BEGIN
-    END
-
-    IDD_PPAGECAPTURE, DIALOG
-    BEGIN
-        VERTGUIDE, 10
-        VERTGUIDE, 84
-    END
-
     IDD_PPAGEFULLSCREEN, DIALOG
     BEGIN
         VERTGUIDE, 244
@@ -1550,7 +1426,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Open File/URL...",           ID_FILE_OPENMEDIA
         MENUITEM "Open &DVD/BD...",             ID_FILE_OPENDVDBD
-        MENUITEM "Open De&vice...",             ID_FILE_OPENDEVICE
         MENUITEM "Open Dir&ectory...",          ID_FILE_OPENDIRECTORY
         MENUITEM "O&pen Disc",                  ID_FILE_OPENDISC
         MENUITEM "Recent &Files",               ID_RECENT_FILES
@@ -1583,8 +1458,6 @@ BEGIN
         MENUITEM "St&atus",                     ID_VIEW_STATUS
         MENUITEM "Su&bresync",                  ID_VIEW_SUBRESYNC
         MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
-        MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
-        MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
         POPUP "&Presets..."
         BEGIN
             MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
@@ -1828,7 +1701,6 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "&Open File/URL...",           ID_FILE_OPENMEDIA
             MENUITEM "Open &DVD/BD...",             ID_FILE_OPENDVDBD
-            MENUITEM "Open De&vice...",             ID_FILE_OPENDEVICE
             MENUITEM "Open Dir&ectory...",          ID_FILE_OPENDIRECTORY
             MENUITEM "O&pen Disc",                  ID_FILE_OPENDISC
             MENUITEM "Recent &Files",               ID_RECENT_FILES
@@ -2004,8 +1876,6 @@ BEGIN
             MENUITEM "St&atus",                     ID_VIEW_STATUS
             MENUITEM "Su&bresync",                  ID_VIEW_SUBRESYNC
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
-            MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
-            MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
             POPUP "&Presets..."
             BEGIN
                 MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
@@ -2095,7 +1965,6 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "&Open File/URL...",           ID_FILE_OPENMEDIA
             MENUITEM "Open &DVD/BD...",             ID_FILE_OPENDVDBD
-            MENUITEM "Open De&vice...",             ID_FILE_OPENDEVICE
             MENUITEM "Open Dir&ectory...",          ID_FILE_OPENDIRECTORY
             MENUITEM "O&pen Disc",                  ID_FILE_OPENDISC
             MENUITEM "Recent &Files",               ID_RECENT_FILES
@@ -2126,8 +1995,6 @@ BEGIN
             MENUITEM "St&atus",                     ID_VIEW_STATUS
             MENUITEM "Su&bresync",                  ID_VIEW_SUBRESYNC
             MENUITEM "Pla&ylist",                   ID_VIEW_PLAYLIST
-            MENUITEM "Captu&re",                    ID_VIEW_CAPTURE
-            MENUITEM "Na&vigation",                 ID_VIEW_NAVIGATION
             POPUP "&Presets..."
             BEGIN
                 MENUITEM "&Minimal",                    ID_VIEW_PRESETS_MINIMAL
@@ -2551,11 +2418,6 @@ BEGIN
     0
 END
 
-IDD_TUNER_SCAN AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
 IDD_PPAGETHEME AFX_DIALOG_LAYOUT
 BEGIN
     0
@@ -2574,7 +2436,6 @@ BEGIN
     IDS_INFOBAR_AUDIO       "Audio"
     IDS_INFOBAR_SUBTITLES   "Subtitles"
     IDS_INFOBAR_CHAPTER     "Chapter"
-    IDS_CONTROLS_COMPLETING "Completing..."
     IDS_AUTOPLAY_PLAYVIDEO  "Play Video"
     IDS_AUTOPLAY_PLAYMUSIC  "Play Music"
     IDS_AUTOPLAY_PLAYAUDIOCD "Play Audio CD"
@@ -2602,15 +2463,11 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INFOBAR_CHANNEL     "Channel"
-    IDS_INFOBAR_TIME        "Time"
     IDS_STATSBAR_SYNC_OFFSET "Sync Offset"
     IDS_STATSBAR_SYNC_OFFSET_FORMAT "avg: %d ms, dev: %d ms"
     IDS_STATSBAR_JITTER     "Jitter"
     IDS_STATSBAR_BITRATE    "Bitrate"
     IDS_STATSBAR_BITRATE_AVG_CUR "(avg/cur)"
-    IDS_STATSBAR_SIGNAL     "Signal"
-    IDS_STATSBAR_SIGNAL_FORMAT "Strength: %d dB, Quality: %ld%%"
     IDS_SUBTITLES_STYLES_CAPTION "Styles"
     IDS_TEXT_SUB_RENDERING_TARGET 
                             "If the rendering target is left undefined, SSA/ASS subtitles will be rendered relative to the video frame while all other text subtitles will be rendered relative to the window."
@@ -2623,31 +2480,9 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_PPAGE_CAPTURE_FG0   "Never"
-    IDS_PPAGE_CAPTURE_FG1   "Only when switching different video types"
-    IDS_PPAGE_CAPTURE_FG2   "Always (default)"
-    IDS_PPAGE_CAPTURE_FGDESC0 
-                            "Not supported by some devices. Two video decoders always present in the filter graph."
-    IDS_PPAGE_CAPTURE_FGDESC1 
-                            "Fast except when switching between different video streams. Only one video decoder present in the filter graph."
-    IDS_PPAGE_CAPTURE_SFG0  "Never if possible (fastest, but not supported by most filters)"
-    IDS_PPAGE_CAPTURE_SFG1  "Only when switching different video types"
-    IDS_PPAGE_CAPTURE_SFG2  "Always (may be required by some devices)"
-    IDS_INFOBAR_PARENTAL_RATING "Parental rating"
-    IDS_PARENTAL_RATING     "%d+"
-    IDS_NO_PARENTAL_RATING  "Not rated"
-    IDS_INFOBAR_CONTENT     "Content"
-    IDS_CONTENT_MOVIE_DRAMA "Movie/Drama"
-    IDS_CONTENT_NEWS_CURRENTAFFAIRS "News/Current affairs"
-END
-
-STRINGTABLE
-BEGIN
     IDS_SPEED_UNIT_G        "GB/s"
     IDS_FILE_FAV_ADDED      "File added to favorites"
     IDS_DVD_FAV_ADDED       "DVD added to favorites"
-    IDS_CAPTURE_SETTINGS    "Capture Settings"
-    IDS_NAVIGATION_BAR      "Navigation Bar"
     IDS_SUBRESYNC_CAPTION   "Subresync"
     IDS_SUBRESYNC_CLN_TIME  "Time"
     IDS_SUBRESYNC_CLN_END   "End"
@@ -2666,10 +2501,6 @@ BEGIN
                             "Failed to render some of the pins of the DVD Navigator filter"
     IDS_DVD_INTERFACES_ERROR 
                             "Failed to query the needed interfaces for DVD playback"
-    IDS_CAPTURE_LIVE        "Live"
-    IDS_CAPTURE_ERROR_VID_FILTER "Can't add video capture filter to the graph"
-    IDS_CAPTURE_ERROR_AUD_FILTER "Can't add audio capture filter to the graph"
-    IDS_CAPTURE_ERROR_DEVICE "Could not open capture device."
     IDS_INVALID_PARAMS_ERROR "Can't open, invalid input parameters"
     IDS_EDIT_LIST_EDITOR    "Edit List Editor"
     IDS_GOTO_ERROR_INVALID_TIME 
@@ -2708,7 +2539,6 @@ END
 STRINGTABLE
 BEGIN
     IDS_PLAYLIST_OPEN       "&Open"
-    IDS_PLAYLIST_ADD        "A&dd"
     IDS_PLAYLIST_REMOVE     "&Remove"
     IDS_PLAYLIST_CLEAR      "C&lear"
     IDS_PLAYLIST_COPYTOCLIPBOARD "&Copy to clipboard"
@@ -2782,7 +2612,6 @@ BEGIN
     IDD_FILEPROPRES         "Resources"
     IDD_PPAGEMISC           "Miscellaneous"
     IDD_FILEMEDIAINFO       "MediaInfo"
-    IDD_PPAGECAPTURE        "Playback::Capture"
     IDD_PPAGEFULLSCREEN     "Playback::Fullscreen"
 END
 
@@ -2814,7 +2643,6 @@ BEGIN
     IDS_NAVIGATE_PLAYLIST   "&Playlist"
     IDS_NAVIGATE_CHAPTERS   "&Chapters"
     IDS_NAVIGATE_TITLES     "&Titles"
-    IDS_NAVIGATE_CHANNELS   "&Channels"
     IDS_PPAGE_OUTPUT_MPCVR  "MPC Video Renderer"
     IDS_PPAGE_OUTPUT_VMR7   "Video Mixing Renderer 7"
 END
@@ -2916,7 +2744,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_NAVIGATE_TUNERSCAN  "Tuner scan"
     IDS_SUBTITLES_ERROR     "Subtitles are not loaded or unsupported renderer."
     IDC_CACHESHADERS        "Stores compiled shaders in local AppData to speed up load time."
 END
@@ -2933,7 +2760,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_TOGGLE_NAVIGATION "Toggle Navigation Bar"
     IDS_AG_VSYNCACCURATE    "Accurate VSync"
 END
 
@@ -3002,8 +2828,6 @@ BEGIN
                             "Disable screen saver and monitor sleep mode during video playback."
     IDS_PPAGEADVANCED_STILL_VIDEO_DURATION 
                             "Display duration in seconds for images rendered by ""Generate Still Video"" and ""MPC Image Source"" filters. Use 0 for infinite."
-    IDS_PPAGEADVANCED_CAPTURE_DEINTERLACE 
-                            "Insert deinterlace filter (blend) in capture mode"
     IDS_PLAYLIST_TOGGLE_SHUFFLE "Toggle Playlist Shuffle"
     IDS_AUDIOSHIFT_ONOFF    "Toggle Audio Delay"
 END
@@ -3051,7 +2875,6 @@ STRINGTABLE
 BEGIN
     IDS_CONTROLS_STOPPED    "Stopped"
     IDS_CONTROLS_BUFFERING  "Buffering... (%d%%)"
-    IDS_CONTROLS_CAPTURING  "Capturing..."
     IDS_CONTROLS_OPENING    "Opening..."
     IDS_CONTROLS_CLOSED     "Closed"
     IDS_SUBTITLES_OPTIONS   "&Options..."
@@ -3106,8 +2929,6 @@ BEGIN
     IDS_AG_SHADERS_PRESET_NEXT "Next Shader Preset"
     IDS_AG_SHADERS_PRESET_PREV "Prev Shader Preset"
     IDS_STRING_COLON        "%s:"
-    IDS_RECORD_START        "Record"
-    IDS_RECORD_STOP         "Stop"
     IDS_BALANCE             "L = R"
     IDS_BALANCE_L           "L +%d%%"
     IDS_BALANCE_R           "R +%d%%"
@@ -3125,7 +2946,6 @@ BEGIN
     IDS_CREDENTIALS_SERVER  "Enter server credentials"
     IDS_CREDENTIALS_CONNECT "Enter your credentials to connect"
     IDS_SUB_SAVE_EXTERNAL_STYLE_FILE "Save custom style"
-    IDS_CONTENT_EDUCATION_SCIENCE "Education/Science/Factual topics"
     IDS_PPAGEADVANCED_HIDE_WINDOWED 
                             "Hides controls and panels also in windowed mode."
     IDS_PPAGEADVANCED_BLOCK_VSFILTER 
@@ -3155,17 +2975,10 @@ BEGIN
     IDS_SUBTITLE_DELAY_STEP_TOOLTIP 
                             "The subtitle delay will be decreased/increased by this value each time the corresponding hotkeys are used (%s/%s)."
     IDS_HOTKEY_NOT_DEFINED  "<not defined>"
-    IDS_NAVIGATION_WATCH    "Watch"
-    IDS_NAVIGATION_MOVE_UP  "Move Up"
-    IDS_NAVIGATION_MOVE_DOWN "Move Down"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_NAVIGATION_SORT     "Sort by LCN"
-    IDS_NAVIGATION_REMOVE_ALL "Remove all"
-    IDS_REMOVE_CHANNELS_QUESTION 
-                            "Are you sure you want to remove all channels from the list?"
     IDS_MEDIAINFO_NO_INFO_AVAILABLE "No information available"
     IDS_MEDIAINFO_ANALYSIS_IN_PROGRESS "Please wait, analysis in progress..."
     IDS_ASPECT_RATIO_FMT    "AR %d:%d"
@@ -3181,7 +2994,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_AG_OPEN_DEVICE      "Open Device"
     IDS_AG_SAVE_AS          "Save As"
     IDS_AG_SAVE_IMAGE       "Save Image"
     IDS_MPLAYERC_6          "Save Image (auto)"
@@ -3201,13 +3013,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_CONTENT_SHOW_GAMESHOW "Show/Game show"
-    IDS_CONTENT_SPORTS      "Sports"
-    IDS_CONTENT_CHILDREN_YOUTH_PROG "Children's/Youth programmes"
-    IDS_CONTENT_MUSIC_BALLET_DANCE "Music/Ballet/Dance"
-    IDS_CONTENT_MUSIC_ART_CULTURE "Arts/Culture"
-    IDS_CONTENT_SOCIAL_POLITICAL_ECO "Social/Political issues/Economics"
-    IDS_CONTENT_LEISURE     "Leisure hobbies"
     IDS_FILE_RECYCLE        "Move to Recycle Bin"
     IDS_AG_SAVE_COPY        "Save a Copy"
     IDS_FASTSEEK_LATEST     "Latest keyframe"
@@ -3241,7 +3046,6 @@ BEGIN
                             "The settings have been successfully exported."
     IDS_EXPORT_SETTINGS_FAILED 
                             "The export failed! This can happen when you don't have the correct rights."
-    IDS_BDA_ERROR           "BDA Error"
 END
 
 STRINGTABLE
@@ -3390,17 +3194,8 @@ END
 STRINGTABLE
 BEGIN
     IDS_FAVORITES_QUICKADDFAVORITE "Quick add favorite"
-    IDS_DVB_CHANNEL_NUMBER  "N"
-    IDS_DVB_CHANNEL_NAME    "Name"
-    IDS_DVB_CHANNEL_FREQUENCY "Frequency"
-    IDS_DVB_CHANNEL_ENCRYPTION "Encrypted"
     IDS_YES                 "Yes"
     IDS_NO                  "No"
-    IDS_DVB_CHANNEL_START_SCAN "Start"
-    IDS_DVB_CHANNEL_STOP_SCAN "Stop"
-    IDS_DVB_TVNAV_SEERADIO  "Radio stations"
-    IDS_DVB_TVNAV_SEETV     "TV stations"
-    IDS_DVB_CHANNEL_FORMAT  "Format"
 END
 
 STRINGTABLE
@@ -3456,12 +3251,6 @@ END
 STRINGTABLE
 BEGIN
     IDS_AG_ASPECT_RATIO     "Aspect Ratio"
-    IDS_MAINFRM_37          ", Total: %ld, Dropped: %ld"
-    IDS_MAINFRM_38          ", Size: %I64d KB"
-    IDS_MAINFRM_39          ", Size: %I64d MB"
-    IDS_MAINFRM_40          ", Free: %I64d KB"
-    IDS_MAINFRM_41          ", Free: %I64d MB"
-    IDS_MAINFRM_42          ", Free V/A Buffers: %03d/%03d"
     IDS_AG_ERROR            "Error"
     IDS_SUBTITLE_STREAM_OFF "Subtitle: off"
     IDS_SUBTITLE_STREAM     "Subtitle: %s"
@@ -3531,9 +3320,6 @@ BEGIN
     IDS_MAINFRM_93          "Cannot find DVD directory"
     IDS_MAINFRM_94          "Can't create the DVD Navigator filter"
     IDS_AG_FAILED           "Failed"
-    IDS_MAINFRM_96          "Can't create video capture filter"
-    IDS_MAINFRM_98          "No capture filters"
-    IDS_MAINFRM_99          "Can't create capture graph builder object"
     IDS_MAINFRM_RENDERFAIL_DLL     "Cannot render the file. Failure loading internal filter. Could be caused by a missing DLL."
     IDS_MAINFRM_RENDERFAIL_DLL_SAC "Cannot render the file. Failure loading internal filter. Could be caused by ""Smart App Control""."
     IDS_MAINFRM_RENDERFAIL_CORRUPT "Cannot render the file. File might be damaged or incomplete. Send file to developers for analysis."
@@ -3541,7 +3327,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_MAINFRM_108         "Couldn't open any device"
     IDS_AG_SOUND            "Sound"
     IDS_MAINFRM_114         "%s was not found, please insert media containing this file."
     IDS_AG_ABORTED          "Aborted"
@@ -3579,7 +3364,6 @@ BEGIN
     IDS_AG_TOGGLE_STATUS    "Toggle Status"
     IDS_AG_TOGGLE_SUBRESYNC "Toggle Subresync Bar"
     IDS_AG_TOGGLE_PLAYLIST  "Toggle Playlist Bar"
-    IDS_AG_TOGGLE_CAPTURE   "Toggle Capture Bar"
     IDS_AG_TOGGLE_DEBUGSHADERS "Toggle Debug Shaders"
     IDS_AG_ZOOM_50          "Zoom 50%"
     IDS_AG_ZOOM_100         "Zoom 100%"
@@ -3752,13 +3536,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_DVB_CHANNEL_FPS     "FPS"
-    IDS_DVB_CHANNEL_RESOLUTION "Resolution"
-    IDS_DVB_CHANNEL_ASPECT_RATIO "Aspect Ratio"
-END
-
-STRINGTABLE
-BEGIN
     IDS_OSD_RS_VSYNC_ON     "VSync: On"
     IDS_OSD_RS_VSYNC_OFF    "VSync: Off"
     IDS_OSD_RS_ACCURATE_VSYNC_ON "Accurate VSync: On"
@@ -3857,14 +3634,8 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_BDA_ERROR_CREATE_TUNER "Could not create the tuner."
-    IDS_BDA_ERROR_CREATE_RECEIVER "Could not create the receiver."
     IDS_BDA_ERROR_CONNECT_NW_TUNER 
                             "Could not connect the network and the tuner."
-    IDS_BDA_ERROR_CONNECT_TUNER_REC 
-                            "Could not connect the tuner and the receiver."
-    IDS_BDA_ERROR_CONNECT_TUNER "Could not connect the tuner."
-    IDS_BDA_ERROR_DEMULTIPLEXER "Could not create the demultiplexer."
     IDS_GOTO_ERROR_PARSING_TIME "Error parsing the entered time!"
     IDS_GOTO_ERROR_PARSING_TEXT "Error parsing the entered text!"
     IDS_GOTO_ERROR_PARSING_FPS "Error parsing the entered frame rate!"
@@ -3879,25 +3650,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_CAPTURE_ERROR       "Capture Error"
-    IDS_CAPTURE_ERROR_VIDEO "video"
-    IDS_CAPTURE_ERROR_AUDIO "audio"
-    IDS_CAPTURE_ERROR_ADD_BUFFER 
-                            "Can't add the %s buffer filter to the graph."
-    IDS_CAPTURE_ERROR_CONNECT_BUFF 
-                            "Can't connect the %s buffer filter to the graph."
-    IDS_CAPTURE_ERROR_ADD_ENCODER 
-                            "Can't add the %s encoder filter to the graph."
-    IDS_CAPTURE_ERROR_CONNECT_ENC 
-                            "Can't connect the %s encoder filter to the graph."
-    IDS_CAPTURE_ERROR_COMPRESSION 
-                            "Can't set the compression format on the %s encoder filter."
-    IDS_CAPTURE_ERROR_MULTIPLEXER 
-                            "Can't connect the %s stream to the multiplexer filter."
-    IDS_CAPTURE_ERROR_VID_CAPT_PIN "No video capture pin was found."
-    IDS_CAPTURE_ERROR_AUD_CAPT_PIN "No audio capture pin was found."
-    IDS_CAPTURE_ERROR_OUT_FILE "Error initializing the output file."
-    IDS_CAPTURE_ERROR_AUD_OUT_FILE "Error initializing the audio output file."
     IDS_SUBRESYNC_TIME_FORMAT 
                             "The correct time format is [-]hh:mm:ss.ms (e.g. 01:23:45.678)."
     IDS_EXTERNAL_FILTERS_ERROR_MT "This type is already in the list!"
@@ -4024,7 +3776,6 @@ BEGIN
     IDS_CMD_DVDPOS_TC       "/dvdpos T#C\tStart playback at title T, chapter C"
     IDS_CMD_DVDPOS_TIME     "/dvdpos T#P\tStart playback at title T, position P (hh:mm:ss)"
     IDS_CMD_CD              "/cd\t\tLoad all the tracks of an Audio CD or (S)VCD,\n\t\t""pathname"" means the drive path (optional)"
-    IDS_CMD_DEVICE          "/device\t\tOpen the default video device"
     IDS_CMD_OPEN            "/open\t\tOpen the file, don't automatically start playback"
     IDS_CMD_PLAY            "/play\t\tStart playing the file as soon the player is launched"
     IDS_CMD_CLOSE           "/close\t\tClose the player after playback (only works when used with /play)"
@@ -4093,11 +3844,6 @@ BEGIN
     IDS_OSD_AUTOCOPY_SUBTITLE_ON "Auto-Copy Subtitle to Clipboard: On"
     IDS_OSD_AUTOCOPY_SUBTITLE_OFF "Auto-Copy Subtitle to Clipboard: Off"
     IDS_SUBTITLES_SECONDARY_BAD_FORMAT "This subtitle format cannot be used as a secondary subtitle track. Only simple text formats such as SRT are supported."
-    IDS_CMD_DVBSCAN         "/dvbscan N-M\tScan the default digital capture device from N to M (kHz)\n\t\twithout the scan dialog, then exit"
-    IDS_CMD_DVBSCANOUT      "/dvbscanout ""file""\tWrite the channels found by /dvbscan to ""file"" as JSON"
-    IDS_CMD_DVBBANDWIDTH    "/dvbbandwidth N\tOverride the saved bandwidth (kHz) used by /dvbscan"
-    IDS_CMD_DVBSYMBOLRATE   "/dvbsymbolrate N\tOverride the saved symbol rate used by /dvbscan"
-    IDS_CMD_DVBSCANSAVE     "/dvbscansave\tWith /dvbscan, replace the saved channel list with the channels found\n\t\tand make the first one the current channel. The saved list is kept\n\t\twhen nothing is found"
 END
 
 STRINGTABLE
@@ -4185,8 +3931,6 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_PPAGEADVANCED_OPEN_REC_PANEL_WHEN_OPENING_DEVICE 
-                            "Show the recording settings dialog automatically when opening a device."
     IDS_PPAGEADVANCED_ALWAYS_USE_SHORT_MENU 
                             "Player Menu shortcuts and right-click show compact menu -- even when main menu is hidden."
     IDS_PPAGEADVANCED_FULLSCREEN_SEPARATE_CONTROLS 

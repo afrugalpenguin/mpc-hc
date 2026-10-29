@@ -10,9 +10,6 @@
     <Filter Include="Property Dialogs">
       <UniqueIdentifier>{36ad4cd9-ded8-4c35-8a6d-1ffb3ddc2684}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DVB">
-      <UniqueIdentifier>{ad577ec8-11b8-4fcf-8b57-72f6cdabf032}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Toolbars">
       <UniqueIdentifier>{cf28b89c-1840-4771-ad84-96c85e9958b5}</UniqueIdentifier>
     </Filter>
@@ -109,9 +106,6 @@
     <ClCompile Include="EditWithButton.cpp">
       <Filter>Custom Controls</Filter>
     </ClCompile>
-    <ClCompile Include="DVBChannel.cpp">
-      <Filter>DVB</Filter>
-    </ClCompile>
     <ClCompile Include="FavoriteAddDlg.cpp">
       <Filter>Modal Dialogs</Filter>
     </ClCompile>
@@ -125,9 +119,6 @@
       <Filter>Graph</Filter>
     </ClCompile>
     <ClCompile Include="FGManager.cpp">
-      <Filter>Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="FGManagerBDA.cpp">
       <Filter>Graph</Filter>
     </ClCompile>
     <ClCompile Include="GoToDlg.cpp">
@@ -163,9 +154,6 @@
     <ClCompile Include="FloatEdit.cpp">
       <Filter>Custom Controls</Filter>
     </ClCompile>
-    <ClCompile Include="FreeviewEPGDecode.cpp">
-      <Filter>DVB</Filter>
-    </ClCompile>
     <ClCompile Include="Ifo.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
@@ -183,9 +171,6 @@
     </ClCompile>
     <ClCompile Include="MPCPngImage.cpp">
       <Filter>Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Mpeg2SectionData.cpp">
-      <Filter>DVB</Filter>
     </ClCompile>
     <ClCompile Include="MultiMonitor.cpp">
       <Filter>Helpers</Filter>
@@ -225,9 +210,6 @@
     </ClCompile>
     <ClCompile Include="PPageBase.cpp">
       <Filter>Property Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="PPageCapture.cpp">
-      <Filter>Property Dialogs\Player Options\Pages</Filter>
     </ClCompile>
     <ClCompile Include="PPageDVD.cpp">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
@@ -346,9 +328,6 @@
     <ClCompile Include="Translations.cpp">
       <Filter>Player Config</Filter>
     </ClCompile>
-    <ClCompile Include="TunerScanDlg.cpp">
-      <Filter>Modal Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="UpdateCheckerDlg.cpp">
       <Filter>Modal Dialogs</Filter>
     </ClCompile>
@@ -365,9 +344,6 @@
       <Filter>Custom Controls</Filter>
     </ClCompile>
     <ClCompile Include="BaseGraph.cpp">
-      <Filter>Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="DeinterlacerFilter.cpp">
       <Filter>Graph</Filter>
     </ClCompile>
     <ClCompile Include="ExceptionHandler.cpp" />
@@ -402,18 +378,6 @@
     </ClCompile>
     <ClCompile Include="FullscreenWnd.cpp">
       <Filter>Main View</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCaptureBar.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCaptureDialog.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerNavigationBar.cpp">
-      <Filter>Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerNavigationDialog.cpp">
-      <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSubresyncBar.cpp">
       <Filter>Panels</Filter>
@@ -664,17 +628,11 @@
     <ClInclude Include="EditWithButton.h">
       <Filter>Custom Controls</Filter>
     </ClInclude>
-    <ClInclude Include="DVBChannel.h">
-      <Filter>DVB</Filter>
-    </ClInclude>
     <ClInclude Include="FavoriteAddDlg.h">
       <Filter>Modal Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="FavoriteOrganizeDlg.h">
       <Filter>Modal Dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="FGManagerBDA.h">
-      <Filter>Graph</Filter>
     </ClInclude>
     <ClInclude Include="FGFilter.h">
       <Filter>Graph</Filter>
@@ -718,9 +676,6 @@
     <ClInclude Include="FloatEdit.h">
       <Filter>Custom Controls</Filter>
     </ClInclude>
-    <ClInclude Include="FreeviewEPGDecode.h">
-      <Filter>DVB</Filter>
-    </ClInclude>
     <ClInclude Include="Ifo.h">
       <Filter>Helpers</Filter>
     </ClInclude>
@@ -744,9 +699,6 @@
     </ClInclude>
     <ClInclude Include="MPCPngImage.h">
       <Filter>Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Mpeg2SectionData.h">
-      <Filter>DVB</Filter>
     </ClInclude>
     <ClInclude Include="MultiMonitor.h">
       <Filter>Helpers</Filter>
@@ -786,9 +738,6 @@
     </ClInclude>
     <ClInclude Include="PPageBase.h">
       <Filter>Property Dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="PPageCapture.h">
-      <Filter>Property Dialogs\Player Options\Pages</Filter>
     </ClInclude>
     <ClInclude Include="PPageDVD.h">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
@@ -916,9 +865,6 @@
     <ClInclude Include="Translations.h">
       <Filter>Player Config</Filter>
     </ClInclude>
-    <ClInclude Include="TunerScanDlg.h">
-      <Filter>Modal Dialogs</Filter>
-    </ClInclude>
     <ClInclude Include="UpdateCheckerDlg.h">
       <Filter>Modal Dialogs</Filter>
     </ClInclude>
@@ -935,9 +881,6 @@
       <Filter>Custom Controls</Filter>
     </ClInclude>
     <ClInclude Include="BaseGraph.h">
-      <Filter>Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="DeinterlacerFilter.h">
       <Filter>Graph</Filter>
     </ClInclude>
     <ClInclude Include="ExceptionHandler.h" />
@@ -982,18 +925,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\version.h">
       <Filter>Build Info</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCaptureBar.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCaptureDialog.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerNavigationBar.h">
-      <Filter>Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerNavigationDialog.h">
-      <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSubresyncBar.h">
       <Filter>Panels</Filter>

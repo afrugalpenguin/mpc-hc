@@ -24,7 +24,6 @@
 #include "../DeCSS/VobFile.h"
 #include "../filters/Filters.h"
 #include "AllocatorCommon.h"
-#include "DeinterlacerFilter.h"
 #include "FakeFilterMapper2.h"
 #include "FileVersionInfo.h"
 #include "IPinHook.h"
@@ -3243,23 +3242,6 @@ STDMETHODIMP CFGManagerDVD::AddSourceFilter(LPCWSTR lpcwstrFileName, LPCWSTR lpc
     *ppFilter = pBF.Detach();
 
     return S_OK;
-}
-
-//
-// CFGManagerCapture
-//
-
-CFGManagerCapture::CFGManagerCapture(HWND hWnd)
-    : CFGManagerPlayer(_T("CFGManagerCapture"), L"", hWnd, false, true)
-{
-    const CAppSettings& s = AfxGetAppSettings();
-
-    if (s.bCaptureDeinterlace) {
-        // set merit higher than our video renderers
-        CFGFilter* pFGF = DEBUG_NEW CFGFilterInternal<CDeinterlacerFilter>(L"Deinterlacer", MERIT64(0x800001) + 0x200);
-        pFGF->AddType(MEDIATYPE_Video, MEDIASUBTYPE_NULL);
-        m_transform.AddTail(pFGF);
-    }
 }
 
 //

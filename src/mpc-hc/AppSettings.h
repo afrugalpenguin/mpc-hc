@@ -24,7 +24,6 @@
 #include "../Subtitles/STS.h"
 #include "../filters/switcher/AudioSwitcher/AudioSwitcher.h"
 #include "../thirdparty/sanear/src/Interfaces.h"
-#include "DVBChannel.h"
 #include "FileAssoc.h"
 #include "FilterEnum.h"
 #include "MediaFormats.h"
@@ -69,8 +68,7 @@ enum : UINT64 {
     CLSW_HELP = CLSW_NEW << 1,
     CLSW_DVD = CLSW_HELP << 1,
     CLSW_CD = CLSW_DVD << 1,
-    CLSW_DEVICE = CLSW_CD << 1,
-    CLSW_ADD = CLSW_DEVICE << 1,
+    CLSW_ADD = CLSW_CD << 1,
     CLSW_RANDOMIZE = CLSW_ADD << 1,
     CLSW_MINIMIZED = CLSW_RANDOMIZE << 1,
     CLSW_REGEXTVID = CLSW_MINIMIZED << 1,
@@ -97,8 +95,7 @@ enum : UINT64 {
     CLSW_MUTE = CLSW_CONFIGLAVVIDEO << 1,
     CLSW_VOLUME = CLSW_MUTE << 1,
     CLSW_THUMBNAILS = CLSW_VOLUME << 1,
-    CLSW_DVBSCAN = CLSW_THUMBNAILS << 1,
-    CLSW_UNRECOGNIZEDSWITCH = CLSW_DVBSCAN << 1, // 48
+    CLSW_UNRECOGNIZEDSWITCH = CLSW_THUMBNAILS << 1,
     CLSW_EMBEDDING = CLSW_UNRECOGNIZEDSWITCH << 1, // started by COM to serve an Explorer verb, see ShellDropTarget.h
 };
 
@@ -204,18 +201,6 @@ enum {
     STARTUP_PRESET_NORMAL,
     STARTUP_PRESET_CUSTOM,
     STARTUP_PRESET_COUNT
-};
-
-enum DVB_RebuildFilterGraph {
-    DVB_REBUILD_FG_NEVER = 0,
-    DVB_REBUILD_FG_WHEN_SWITCHING,
-    DVB_REBUILD_FG_ALWAYS
-};
-
-enum DVB_StopFilterGraph {
-    DVB_STOP_FG_NEVER = 0,
-    DVB_STOP_FG_WHEN_SWITCHING,
-    DVB_STOP_FG_ALWAYS
 };
 
 struct ShaderC {
@@ -724,7 +709,6 @@ public:
     bool            bPreventDisplaySleep;
     bool            bUseSMTC;
     int             iReloadAfterLongPause;
-    bool            bOpenRecPanelWhenOpeningDevice;
 
     enum class AfterPlayback {
         DO_NOTHING,
@@ -764,39 +748,6 @@ public:
     AutoChangeFullscreenMode autoChangeFSMode;
 
     // Sync Renderer Settings
-
-    // Capture (BDA configuration)
-    int             iDefaultCaptureDevice;      // Default capture device (analog=0, 1=digital)
-    CString         strAnalogVideo;
-    CString         strAnalogAudio;
-    int             iAnalogCountry;
-    //CString         strBDANetworkProvider;
-    CString         strBDATuner;
-    CString         strBDAReceiver;
-    //CString           strBDAStandard;
-    int             iBDAScanFreqStart;
-    int             iBDAScanFreqEnd;
-    int             iBDABandwidth;
-    int             iBDASymbolRate;
-    bool            fBDAUseOffset;
-    int             iBDAOffset;
-    bool            fBDAIgnoreEncryptedChannels;
-    int             nDVBLastChannel;
-    std::vector<CBDAChannel> m_DVBChannels;
-    DVB_RebuildFilterGraph nDVBRebuildFilterGraph;
-    DVB_StopFilterGraph nDVBStopFilterGraph;
-
-    // Headless tuner scan, driven by /dvbscan. Command line only and never
-    // persisted: this describes one run rather than a preference, and writing
-    // it to the profile would leave the next launch trying to scan.
-    struct {
-        ULONG   ulFrequencyStart;   // kHz
-        ULONG   ulFrequencyStop;    // kHz
-        ULONG   ulBandwidth;        // kHz; 0 means use iBDABandwidth
-        ULONG   ulSymbolRate;       // 0 means use iBDASymbolRate
-        CString strOutputPath;      // where the JSON is written
-        bool    bSaveChannels;      // /dvbscansave: the result becomes the saved channel list
-    } cmdlnDVBScan;
 
     // Internal Filters
     bool            SrcFilters[SRC_LAST + !SRC_LAST];
@@ -900,8 +851,6 @@ public:
     // MENUS
     // View
     MpcCaptionState eCaptionMenuMode;
-    bool            fHideNavigation;
-    bool            bHideCaptureSettings;
     int             nCustomPresetControlState; // CS_* bitmask for the Custom preset (hotkey 4)
     int             nCustomPresetCaption;      // MpcCaptionState for the Custom preset
     int             nStartupPreset;            // STARTUP_PRESET_* applied at launch (Remember by default)
@@ -1047,7 +996,6 @@ public:
     int iStillVideoDuration;
     int iMouseLeftUpDelay;
 
-    bool bCaptureDeinterlace;
     bool bConfirmFileDelete;
     bool bShowVolumePercentage;
     // Portable mode: keep the MediaHistory INI and the saved playlist in
@@ -1128,8 +1076,6 @@ public:
     void            GetFav(favtype ft, CAtlList<CString>& sl) const;
     void            SetFav(favtype ft, CAtlList<CString>& sl);
     void            AddFav(favtype ft, CString s);
-
-    CBDAChannel*    FindChannelByPref(int nPrefNumber);
 
     bool            GetAllowMultiInst() const;
 

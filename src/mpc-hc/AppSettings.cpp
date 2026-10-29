@@ -139,18 +139,6 @@ CAppSettings::CAppSettings()
     , uHideFullscreenControlsDelay(0)
     , bHideFullscreenDockedPanels(true)
     , fExitFullScreenAtTheEnd(true)
-    , iDefaultCaptureDevice(0)
-    , iAnalogCountry(1)
-    , iBDAScanFreqStart(474000)
-    , iBDAScanFreqEnd(858000)
-    , iBDABandwidth(8)
-    , iBDASymbolRate(0)
-    , fBDAUseOffset(false)
-    , iBDAOffset(166)
-    , fBDAIgnoreEncryptedChannels(false)
-    , nDVBLastChannel(INT_ERROR)
-    , nDVBRebuildFilterGraph(DVB_REBUILD_FG_WHEN_SWITCHING)
-    , nDVBStopFilterGraph(DVB_STOP_FG_WHEN_SWITCHING)
     , SrcFilters()
     , TraFilters()
     , fEnableAudioSwitcher(true)
@@ -217,8 +205,6 @@ CAppSettings::CAppSettings()
     , nUpdaterAutoCheck(-1)
     , nUpdaterDelay(7)
     , eCaptionMenuMode(MODE_SHOWCAPTIONMENU)
-    , fHideNavigation(false)
-    , bHideCaptureSettings(false)
     , nCustomPresetControlState(CS_SEEKBAR | CS_TOOLBAR)
     , nStartupPreset(STARTUP_PRESET_REMEMBER)
     , nCustomPresetCaption(MODE_HIDEMENU)
@@ -284,7 +270,6 @@ CAppSettings::CAppSettings()
     , bPreventDisplaySleep(true)
     , bUseSMTC(false)
     , iReloadAfterLongPause(0)
-    , bOpenRecPanelWhenOpeningDevice(true)
     , lastQuickOpenPath(L"")
     , lastFileSaveCopyPath(L"")
     , lastFileOpenDirPath(L"")
@@ -297,7 +282,6 @@ CAppSettings::CAppSettings()
     , iMouseLeftUpDelay(0)
     , bUseFreeType(false)
     , bUseMediainfoLoadFileDuration(false)
-    , bCaptureDeinterlace(false)
     , bPauseWhileDraggingSeekbar(true)
     , bPauseWhenMinimized(false)
     , bConfirmFileDelete(true)
@@ -583,7 +567,6 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_FILE_OPENQUICK,                  'Q', FCONTROL,          IDS_MPLAYERC_0 },
     { ID_FILE_OPENMEDIA,                  'O', FCONTROL,          IDS_AG_OPEN_FILE },
     { ID_FILE_OPENDVDBD,                  'D', FCONTROL,          IDS_AG_OPEN_DVD },
-    { ID_FILE_OPENDEVICE,                 'V', FCONTROL,          IDS_AG_OPEN_DEVICE },
     { ID_FILE_OPENDIRECTORY,                0, 0,                 IDS_AG_OPENDIRECTORY },
     { ID_FILE_REOPEN,                     'E', FCONTROL,          IDS_AG_REOPEN },
     { ID_FILE_RECYCLE,              VK_DELETE, 0,                 IDS_FILE_RECYCLE },
@@ -629,7 +612,6 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_NAVIGATE_SKIPBACK,          VK_PRIOR, 0,                 IDS_AG_PREVIOUS,    APPCOMMAND_MEDIA_PREVIOUSTRACK, wmcmd::X1DOWN },
     { ID_NAVIGATE_SKIPFORWARDFILE,    VK_NEXT, FCONTROL,          IDS_AG_NEXT_FILE },
     { ID_NAVIGATE_SKIPBACKFILE,      VK_PRIOR, FCONTROL,          IDS_AG_PREVIOUS_FILE },
-    { ID_NAVIGATE_TUNERSCAN,              'T', FSHIFT,            IDS_NAVIGATE_TUNERSCAN },
     { ID_FAVORITES_QUICKADDFAVORITE,      'Q', FSHIFT,            IDS_FAVORITES_QUICKADDFAVORITE },
     { ID_FAVORITES_ORGANIZE,               0,  0,                 IDS_FAVORITES_ORGANIZE },
     { ID_VIEW_CAPTIONMENU,                '0', FCONTROL,          IDS_AG_TOGGLE_CAPTION },
@@ -640,8 +622,6 @@ static constexpr wmcmd_base default_wmcmds[] = {
     { ID_VIEW_STATUS,                     '5', FCONTROL,          IDS_AG_TOGGLE_STATUS },
     { ID_VIEW_SUBRESYNC,                  '6', FCONTROL,          IDS_AG_TOGGLE_SUBRESYNC },
     { ID_VIEW_PLAYLIST,                   '7', FCONTROL,          IDS_AG_TOGGLE_PLAYLIST },
-    { ID_VIEW_CAPTURE,                    '8', FCONTROL,          IDS_AG_TOGGLE_CAPTURE },
-    { ID_VIEW_NAVIGATION,                 '9', FCONTROL,          IDS_AG_TOGGLE_NAVIGATION },
     { ID_VIEW_DEBUGSHADERS,                 0, 0,                 IDS_AG_TOGGLE_DEBUGSHADERS },
     { ID_PRESIZE_SHADERS_TOGGLE,          'P', FCONTROL,          IDS_PRESIZE_SHADERS_TOGGLE },
     { ID_POSTSIZE_SHADERS_TOGGLE,         'P', FCONTROL | FALT,   IDS_POSTSIZE_SHADERS_TOGGLE },
@@ -971,8 +951,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     }
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECAPTIONMENU, eCaptionMenuMode);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDENAVIGATION, fHideNavigation);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECAPTURESETTINGS, bHideCaptureSettings);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CONTROLSTATE, nCS);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DEFAULTVIDEOFRAME, iDefaultVideoSize);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_KEEPASPECTRATIO, fKeepAspectRatio);
@@ -1185,39 +1163,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW, fSeekPreview);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW_SIZE, iSeekPreviewSize);
 
-
-    // Save analog capture settings
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DEFAULT_CAPTURE, iDefaultCaptureDevice);
-    pApp->WriteProfileString(IDS_R_CAPTURE, IDS_RS_VIDEO_DISP_NAME, strAnalogVideo);
-    pApp->WriteProfileString(IDS_R_CAPTURE, IDS_RS_AUDIO_DISP_NAME, strAnalogAudio);
-    pApp->WriteProfileInt(IDS_R_CAPTURE, IDS_RS_COUNTRY, iAnalogCountry);
-
-    // Save digital capture settings (BDA) to the replacement section (see
-    // IDS_R_DVB2 in SettingsDefines.h). The legacy section is deliberately left
-    // frozen as a last-known-good snapshot for older builds. Clear the section
-    // first so a shrunken channel list leaves no stale trailing entries.
-    pApp->WriteProfileString(IDS_R_DVB2, nullptr, nullptr);
-    //pApp->WriteProfileString(IDS_R_DVB2, IDS_RS_BDA_NETWORKPROVIDER, strBDANetworkProvider);
-    pApp->WriteProfileString(IDS_R_DVB2, IDS_RS_BDA_TUNER, strBDATuner);
-    pApp->WriteProfileString(IDS_R_DVB2, IDS_RS_BDA_RECEIVER, strBDAReceiver);
-    //pApp->WriteProfileString(IDS_R_DVB2, IDS_RS_BDA_STANDARD, strBDAStandard);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_SCAN_FREQ_START, iBDAScanFreqStart);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_SCAN_FREQ_END, iBDAScanFreqEnd);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_BANDWIDTH, iBDABandwidth);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_SYMBOLRATE, iBDASymbolRate);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_USE_OFFSET, fBDAUseOffset);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_OFFSET, iBDAOffset);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_BDA_IGNORE_ENCRYPTED_CHANNELS, fBDAIgnoreEncryptedChannels);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_DVB_LAST_CHANNEL, nDVBLastChannel);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_DVB_REBUILD_FG, nDVBRebuildFilterGraph);
-    pApp->WriteProfileInt(IDS_R_DVB2, IDS_RS_DVB_STOP_FG, nDVBStopFilterGraph);
-
-    for (size_t i = 0; i < m_DVBChannels.size(); i++) {
-        CString numChannel;
-        numChannel.Format(_T("%Iu"), i);
-        pApp->WriteProfileString(IDS_R_DVB2, numChannel, m_DVBChannels[i].ToString());
-    }
-
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_DVDPOS, fRememberDVDPos);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS, fRememberFilePos);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSLONGER, iRememberPosForLongerThan);
@@ -1361,7 +1306,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PREVENT_DISPLAY_SLEEP, bPreventDisplaySleep);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, bUseSMTC);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, iReloadAfterLongPause);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE, bOpenRecPanelWhenOpeningDevice);
 
     {
         CComHeapPtr<WCHAR> pDeviceId;
@@ -1418,7 +1362,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WIN11_NATIVE_MENUS, bWin11NativeMenus);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_STILL_VIDEO_DURATION, iStillVideoDuration);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_MOUSE_LEFTUP_DELAY, iMouseLeftUpDelay);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CAPTURE_DEINTERLACE, bCaptureDeinterlace);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PAUSE_WHILE_DRAGGING_SEEKBAR, bPauseWhileDraggingSeekbar);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PAUSE_WHEN_MINIMIZED, bPauseWhenMinimized);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_CONFIRM_FILE_DELETE, bConfirmFileDelete);
@@ -1692,8 +1635,6 @@ void CAppSettings::LoadSettings()
     CreateCommands();
 
     eCaptionMenuMode = static_cast<MpcCaptionState>(pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECAPTIONMENU, MODE_SHOWCAPTIONMENU));
-    fHideNavigation = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDENAVIGATION, FALSE);
-    bHideCaptureSettings = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_HIDECAPTURESETTINGS, FALSE);
     nCS = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CONTROLSTATE, CS_SEEKBAR | CS_TOOLBAR | CS_STATUSBAR);
     iDefaultVideoSize = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DEFAULTVIDEOFRAME, DVS_FROMINSIDE);
     fKeepAspectRatio = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_KEEPASPECTRATIO, TRUE);
@@ -1904,7 +1845,6 @@ void CAppSettings::LoadSettings()
     strOpenTypeLangHint = tmpLangHint;
     bUseFreeType = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_FREETYPE, FALSE);
     bUseMediainfoLoadFileDuration = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_MEDIAINFO_LOAD_FILE_DURATION, FALSE);
-    bCaptureDeinterlace = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CAPTURE_DEINTERLACE, FALSE);
     bPauseWhileDraggingSeekbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_PAUSE_WHILE_DRAGGING_SEEKBAR, TRUE);
     bPauseWhenMinimized = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_PAUSE_WHEN_MINIMIZED, FALSE);
     bConfirmFileDelete = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_CONFIRM_FILE_DELETE, TRUE);
@@ -2212,52 +2152,6 @@ void CAppSettings::LoadSettings()
     if (iSeekPreviewSize < 5)  iSeekPreviewSize = 5;
     if (iSeekPreviewSize > 40) iSeekPreviewSize = 40;
 
-    // Save analog capture settings
-    iDefaultCaptureDevice = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_DEFAULT_CAPTURE, 0);
-    strAnalogVideo        = pApp->GetProfileString(IDS_R_CAPTURE, IDS_RS_VIDEO_DISP_NAME, _T("dummy"));
-    strAnalogAudio        = pApp->GetProfileString(IDS_R_CAPTURE, IDS_RS_AUDIO_DISP_NAME, _T("dummy"));
-    iAnalogCountry        = pApp->GetProfileInt(IDS_R_CAPTURE, IDS_RS_COUNTRY, 1);
-
-    // DVB settings live in the replacement section (see IDS_R_DVB2). Probe
-    // BDASymbolRate there with a default of -1 (never a legitimate stored
-    // value): -1 means the section has not been written yet — first run after
-    // an upgrade — so read everything once from the legacy section; the next
-    // save migrates it. After that the frozen legacy entries are never read
-    // again, so clearing all channels can't resurrect them on the next load.
-    LPCTSTR dvbSection =
-        pApp->GetProfileInt(IDS_R_DVB2, IDS_RS_BDA_SYMBOLRATE, -1) != -1 ? IDS_R_DVB2 : IDS_R_DVB;
-    //strBDANetworkProvider = pApp->GetProfileString(dvbSection, IDS_RS_BDA_NETWORKPROVIDER);
-    strBDATuner           = pApp->GetProfileString(dvbSection, IDS_RS_BDA_TUNER);
-    strBDAReceiver        = pApp->GetProfileString(dvbSection, IDS_RS_BDA_RECEIVER);
-    //sBDAStandard        = pApp->GetProfileString(dvbSection, IDS_RS_BDA_STANDARD);
-    iBDAScanFreqStart     = pApp->GetProfileInt(dvbSection, IDS_RS_BDA_SCAN_FREQ_START, 474000);
-    iBDAScanFreqEnd       = pApp->GetProfileInt(dvbSection, IDS_RS_BDA_SCAN_FREQ_END, 858000);
-    iBDABandwidth         = pApp->GetProfileInt(dvbSection, IDS_RS_BDA_BANDWIDTH, 8);
-    iBDASymbolRate        = pApp->GetProfileInt(dvbSection, IDS_RS_BDA_SYMBOLRATE, 0);
-    fBDAUseOffset         = !!pApp->GetProfileInt(dvbSection, IDS_RS_BDA_USE_OFFSET, FALSE);
-    iBDAOffset            = pApp->GetProfileInt(dvbSection, IDS_RS_BDA_OFFSET, 166);
-    fBDAIgnoreEncryptedChannels = !!pApp->GetProfileInt(dvbSection, IDS_RS_BDA_IGNORE_ENCRYPTED_CHANNELS, FALSE);
-    nDVBLastChannel       = pApp->GetProfileInt(dvbSection, IDS_RS_DVB_LAST_CHANNEL, INT_ERROR);
-    nDVBRebuildFilterGraph = (DVB_RebuildFilterGraph) pApp->GetProfileInt(dvbSection, IDS_RS_DVB_REBUILD_FG, DVB_STOP_FG_ALWAYS);
-    nDVBStopFilterGraph = (DVB_StopFilterGraph) pApp->GetProfileInt(dvbSection, IDS_RS_DVB_STOP_FG, DVB_STOP_FG_ALWAYS);
-
-    for (int iChannel = 0; ; iChannel++) {
-        CString strTemp;
-        strTemp.Format(_T("%d"), iChannel);
-        CString strChannel = pApp->GetProfileString(dvbSection, strTemp);
-        if (strChannel.IsEmpty()) {
-            break;
-        }
-        try {
-            m_DVBChannels.emplace_back(strChannel);
-        } catch (CException* e) {
-            // The tokenisation can fail if the input string was invalid
-            TRACE(_T("Failed to parse a DVB channel from string \"%s\""), strChannel.GetString());
-            ASSERT(FALSE);
-            e->Delete();
-        }
-    }
-
     // playback positions for last played files
     fRememberFilePos = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOS, FALSE);
     iRememberPosForLongerThan = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_FILEPOSLONGER, 5);
@@ -2330,7 +2224,6 @@ void CAppSettings::LoadSettings()
     bPreventDisplaySleep = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_PREVENT_DISPLAY_SLEEP, TRUE);
     bUseSMTC = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_USE_SMTC, FALSE);
     iReloadAfterLongPause = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_RELOAD_AFTER_LONG_PAUSE, 0);
-    bOpenRecPanelWhenOpeningDevice = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE, TRUE);
 
     sanear->SetOutputDevice(pApp->GetProfileString(IDS_R_SANEAR, IDS_RS_SANEAR_DEVICE_ID),
                            pApp->GetProfileInt(IDS_R_SANEAR, IDS_RS_SANEAR_DEVICE_EXCLUSIVE, FALSE),
@@ -2753,12 +2646,6 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
     fixedWindowPosition = NO_FIXED_POSITION;
     iMonitor = 0;
     strPnSPreset.Empty();
-    cmdlnDVBScan.ulFrequencyStart = 0;
-    cmdlnDVBScan.ulFrequencyStop = 0;
-    cmdlnDVBScan.ulBandwidth = 0;
-    cmdlnDVBScan.ulSymbolRate = 0;
-    cmdlnDVBScan.strOutputPath.Empty();
-    cmdlnDVBScan.bSaveChannels = false;
 
     POSITION pos = cmdln.GetHeadPosition();
     while (pos) {
@@ -2802,8 +2689,6 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
                 ExtractDVDStartPos(cmdln.GetNext(pos));
             } else if (sw == _T("cd")) {
                 nCLSwitches |= CLSW_CD;
-            } else if (sw == _T("device")) {
-                nCLSwitches |= CLSW_DEVICE;
             } else if (sw == _T("add")) {
                 nCLSwitches |= CLSW_ADD;
             } else if (sw == _T("randomize")) {
@@ -2902,32 +2787,6 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
                 nCLSwitches |= CLSW_MONITOR;
             } else if (sw == _T("pns") && pos) {
                 strPnSPreset = cmdln.GetNext(pos);
-            } else if (sw == _T("dvbscan") && pos) {
-                // /dvbscan <start>-<stop>, in kHz. Run a tuner scan without the
-                // scan dialog, write the result and quit. The range is required
-                // because there is no sensible default: the persisted one
-                // belongs to whoever last used the dialog.
-                CString strRange = cmdln.GetNext(pos);
-                int nDash = strRange.Find(_T('-'));
-                if (nDash > 0) {
-                    ULONG ulStart = _tcstoul(strRange.Left(nDash), nullptr, 10);
-                    ULONG ulStop = _tcstoul(strRange.Mid(nDash + 1), nullptr, 10);
-                    if (ulStart > 0 && ulStop >= ulStart) {
-                        cmdlnDVBScan.ulFrequencyStart = ulStart;
-                        cmdlnDVBScan.ulFrequencyStop = ulStop;
-                        nCLSwitches |= CLSW_DVBSCAN;
-                    }
-                }
-            } else if (sw == _T("dvbscanout") && pos) {
-                cmdlnDVBScan.strOutputPath = cmdln.GetNext(pos);
-            } else if (sw == _T("dvbbandwidth") && pos) {
-                cmdlnDVBScan.ulBandwidth = _tcstoul(cmdln.GetNext(pos), nullptr, 10);
-            } else if (sw == _T("dvbsymbolrate") && pos) {
-                cmdlnDVBScan.ulSymbolRate = _tcstoul(cmdln.GetNext(pos), nullptr, 10);
-            } else if (sw == _T("dvbscansave")) {
-                // Only means anything together with /dvbscan; see
-                // CMainFrame::FinishHeadlessDVBScan for what gets stored.
-                cmdlnDVBScan.bSaveChannels = true;
             } else if (sw == _T("debug")) {
                 fShowDebugInfo = true;
             } else if (sw == _T("nocrashreporter")) {
@@ -3059,15 +2918,6 @@ void CAppSettings::AddFav(favtype ft, CString s)
     }
     sl.AddTail(s);
     SetFav(ft, sl);
-}
-
-CBDAChannel* CAppSettings::FindChannelByPref(int nPrefNumber)
-{
-    auto it = find_if(m_DVBChannels.begin(), m_DVBChannels.end(), [&](CBDAChannel const & channel) {
-        return channel.GetPrefNumber() == nPrefNumber;
-    });
-
-    return it != m_DVBChannels.end() ? &(*it) : nullptr;
 }
 
 // Settings::CRecentFileAndURLList

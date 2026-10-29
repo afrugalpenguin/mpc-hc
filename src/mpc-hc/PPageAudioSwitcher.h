@@ -30,6 +30,7 @@
 #include "CMPCThemeSpinButtonCtrl.h"
 #include "CMPCThemePlayerListCtrl.h"
 #include "CMPCThemeComboBox.h"
+#include "CMPCThemeRadioOrCheck.h"
 
 
 

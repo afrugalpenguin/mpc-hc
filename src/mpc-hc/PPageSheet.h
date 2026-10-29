@@ -42,7 +42,6 @@
 #include "PPageSubMisc.h"
 #include "PPageTweaks.h"
 #include "PPageMisc.h"
-#include "PPageCapture.h"
 #include "PPageShaders.h"
 #include "PPageAdvanced.h"
 #include "TreePropSheet/TreePropSheet.h"
@@ -103,7 +102,6 @@ private:
     CPPageOutput m_output;
     CPPageShaders m_shaders;
     CPPageFullscreen m_fullscreen;
-    CPPageCapture m_tuner;
     CPPageDPICalc m_dpiCalc;
 #if USE_LAVFILTERS
     CPPageInternalFilters m_internalfilters;

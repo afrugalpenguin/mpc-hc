@@ -69,8 +69,6 @@ public:
     enum class Panel {
         SUBRESYNC,
         PLAYLIST,
-        CAPTURE,
-        NAVIGATION,
         EDL,
     };
     std::map<Panel, CPlayerBar*> m_panels;

@@ -22,7 +22,6 @@
 #pragma once
 
 #include "ChildView.h"
-#include "DVBChannel.h"
 #include "DebugShadersDlg.h"
 #include "DropTarget.h"
 #include "EditListEditor.h"
@@ -31,9 +30,7 @@
 #include "MainFrmControls.h"
 #include "MouseTouch.h"
 #include "MpcApi.h"
-#include "PlayerCaptureBar.h"
 #include "PlayerInfoBar.h"
-#include "PlayerNavigationBar.h"
 #include "PlayerPlaylistBar.h"
 #include "PlayerSeekBar.h"
 #include "PlayerStatusBar.h"
@@ -96,9 +93,7 @@ enum class MLS {
 enum {
     PM_NONE,
     PM_FILE,
-    PM_DVD,
-    PM_ANALOG_CAPTURE,
-    PM_DIGITAL_CAPTURE
+    PM_DVD
 };
 
 class OpenMediaData
@@ -129,27 +124,6 @@ public:
     //  OpenDVDData() {}
     CString path;
     CComPtr<IDvdState> pDvdState;
-};
-
-class OpenDeviceData : public OpenMediaData
-{
-public:
-    OpenDeviceData() {
-        vinput = vchannel = ainput = -1;
-    }
-    CStringW DisplayName[2];
-    int vinput, vchannel, ainput;
-};
-
-class TunerScanData
-{
-public:
-    ULONG FrequencyStart;
-    ULONG FrequencyStop;
-    ULONG Bandwidth;
-    ULONG SymbolRate;
-    LONG  Offset;
-    HWND  Hwnd;
 };
 
 struct SeekToCommand {
@@ -208,7 +182,6 @@ public:
         DELAY_IDLE,
         ACTIVE_SHADER_FILES_CHANGE_COOLDOWN,
         DELAY_PLAYPAUSE_AFTER_AUTOCHANGE_MODE,
-        DVBINFO_UPDATE,
         STATUS_ERASE,
         PLACE_FULLSCREEN_UNDER_ACTIVE_WINDOW,
         AUTOFIT_TIMEOUT
@@ -318,15 +291,6 @@ private:
     CComQIPtr<IDvdControl2> m_pDVDC;
     CComQIPtr<IDvdInfo2> m_pDVDI;
     CComPtr<IAMLine21Decoder_2> m_pLN21;
-
-    CComPtr<ICaptureGraphBuilder2> m_pCGB;
-    CStringW m_VidDispName, m_AudDispName;
-    CComPtr<IBaseFilter> m_pVidCap, m_pAudCap;
-    CComPtr<IAMVideoCompression> m_pAMVCCap, m_pAMVCPrev;
-    CComPtr<IAMStreamConfig> m_pAMVSCCap, m_pAMVSCPrev, m_pAMASC;
-    CComPtr<IAMCrossbar> m_pAMXBar;
-    CComPtr<IAMTVTuner> m_pAMTuner;
-    CComPtr<IAMDroppedFrames> m_pAMDF;
 
     CComPtr<IUnknown> m_pProv;
 
@@ -439,7 +403,7 @@ private:
     CMPCThemeMenu m_mainPopupMenu, m_popupMenu;
     CMPCThemeMenu m_openCDsMenu;
     CMPCThemeMenu m_filtersMenu, m_subtitlesMenu, m_subtitlesSecondaryMenu, m_audiosMenu, m_videoStreamsMenu;
-    CMPCThemeMenu m_chaptersMenu, m_titlesMenu, m_playlistMenu, m_BDPlaylistMenu, m_channelsMenu;
+    CMPCThemeMenu m_chaptersMenu, m_titlesMenu, m_playlistMenu, m_BDPlaylistMenu;
     CMPCThemeMenu m_favoritesMenu;
     CMPCThemeMenu m_shadersMenu;
     CMPCThemeMenu m_recentFilesMenu;
@@ -522,7 +486,6 @@ private:
     int m_lastProcessedVolume = -1;
     int m_lastProcessedMute = -1;
 
-    REFERENCE_TIME m_rtDurationOverride;
 
     void CleanGraph();
 
@@ -640,9 +603,6 @@ public:
     int GetPlaybackMode() const {
         return m_iPlaybackMode;
     }
-    bool IsPlaybackCaptureMode() const {
-        return GetPlaybackMode() == PM_ANALOG_CAPTURE || GetPlaybackMode() == PM_DIGITAL_CAPTURE;
-    }
     void SetPlaybackMode(int iNewStatus);
     bool IsMuted() {
         return m_wndToolBar.IsMuted();
@@ -717,7 +677,6 @@ protected:
     // Operations
     bool OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD);
     void CloseMediaPrivate();
-    void DoTunerScan(TunerScanData* pTSD);
 
     CWnd* GetModalParent();
 
@@ -729,8 +688,6 @@ protected:
     void OpenCreateGraphObject(OpenMediaData* pOMD);
     void OpenFile(OpenFileData* pOFD);
     void OpenDVD(OpenDVDData* pODD);
-    void OpenCapture(OpenDeviceData* pODD);
-    HRESULT OpenBDAGraph();
     void OpenCustomizeGraph();
     CSize OpenSetupGetVideoSize();
     void OpenSetupVideo();
@@ -741,7 +698,6 @@ protected:
     void CheckSelectedAudioStream();
     void CheckSelectedVideoStream();
     void OpenSetupStatusBar();
-    void OpenSetupCaptureBar();
     void OpenSetupWindowTitle(bool reset = false);
 
 public:
@@ -789,20 +745,6 @@ public:
     bool DisplayChange();
     bool CloseMediaBeforeOpen();
     void CloseMedia(bool bNextIsQueued = false, bool bPendingFileDelete = false);
-    void StartTunerScan(CAutoPtr<TunerScanData> pTSD);
-    void StopTunerScan();
-    HRESULT SetChannel(int nChannel);
-
-    // Headless tuner scan, driven by /dvbscan rather than CTunerScanDlg.
-    // DoTunerScan reports through window messages, so this listens for them
-    // instead of the dialog and writes the result out. The scan engine itself
-    // is unchanged and unaware of which listener it is talking to.
-    bool m_bHeadlessDVBScan = false;
-    std::vector<CBDAChannel> m_headlessDVBScanChannels;
-    void StartHeadlessDVBScan();
-    void FinishHeadlessDVBScan();
-
-    void AddCurDevToPlaylist();
 
     bool m_bTrayIcon;
     void ShowTrayIcon(bool bShow);
@@ -866,7 +808,6 @@ public:
     void AddFavorite(bool fDisplayMessage = false, bool fShowDialog = true);
 
     CString GetFileName();
-    CString GetCaptureTitle();
 
     // shaders
     void SetShaders(bool bSetPreResize = true, bool bSetPostResize = true);
@@ -878,14 +819,6 @@ public:
 	bool SaveShaderFile(ShaderC* shader);
 	bool DeleteShaderFile(LPCWSTR label);
 	void TidyShaderCache();
-
-    // capturing
-    bool m_fCapturing;
-    HRESULT BuildCapture(IPin* pPin, IBaseFilter* pBF[3], const GUID& majortype, AM_MEDIA_TYPE* pmt); // pBF: 0 buff, 1 enc, 2 mux, pmt is for 1 enc
-    bool BuildToCapturePreviewPin(IBaseFilter* pVidCap, IPin** pVidCapPin, IPin** pVidPrevPin,
-                                  IBaseFilter* pAudCap, IPin** pAudCapPin, IPin** pAudPrevPin);
-    bool BuildGraphVideoAudio(int fVPreview, bool fVCapture, int fAPreview, bool fACapture);
-    bool DoCapture(), StartCapture(), StopCapture();
 
     void DoAfterPlaybackEvent();
     bool SearchInDir(bool bDirForward, bool bLoop = false);
@@ -899,54 +832,9 @@ public:
     virtual void RecalcLayout(BOOL bNotify = TRUE);
     void EnableDocking(DWORD dwDockStyle);
 
-    // DVB capture
-    void UpdateCurrentChannelInfo(bool bShowOSD = true, bool bShowInfoBar = false);
-    LRESULT OnCurrentChannelInfoUpdated(WPARAM wParam, LPARAM lParam);
-
     bool CheckABRepeat(REFERENCE_TIME& aPos, REFERENCE_TIME& bPos);
     void PerformABRepeat();
     void DisableABRepeat();
-
-    struct DVBState {
-        struct EITData {
-            HRESULT hr        = E_FAIL;
-            EventDescriptor NowNext;
-            bool bShowOSD     = true;
-            bool bShowInfoBar = false;
-        };
-
-        CString         sChannelName;                // Current channel name
-        CBDAChannel*    pChannel          = nullptr; // Pointer to current channel object
-        EventDescriptor NowNext;                     // Current channel EIT
-        bool            bActive           = false;   // True when channel is active
-        bool            bSetChannelActive = false;   // True when channel change is in progress
-        bool            bInfoActive       = false;   // True when EIT data update is in progress
-        bool            bAbortInfo        = true;    // True when aborting current EIT update
-        std::future<DVBState::EITData> infoData;
-
-        void Reset() {
-            sChannelName.Empty();
-            pChannel          = nullptr;
-            NowNext           = EventDescriptor();
-            bActive           = false;
-            bSetChannelActive = false;
-            bInfoActive       = false;
-            bAbortInfo        = true;
-        }
-
-        void Join() {
-            if (infoData.valid()) {
-                bAbortInfo = true;
-                infoData.wait();
-            }
-        }
-
-        ~DVBState() {
-            bAbortInfo = true;
-        }
-    };
-
-    std::unique_ptr<DVBState> m_pDVBState = nullptr;
 
     // Implementation
 public:
@@ -973,8 +861,6 @@ protected:  // control bar embedded members
 
     CPlayerSubresyncBar m_wndSubresyncBar;
     CPlayerPlaylistBar m_wndPlaylistBar;
-    CPlayerCaptureBar m_wndCaptureBar;
-    CPlayerNavigationBar m_wndNavigationBar;
     CEditListEditor m_wndEditListEditor;
 
     std::unique_ptr<CDebugShadersDlg> m_pDebugShaders;
@@ -1064,10 +950,6 @@ public:
     afx_msg LRESULT OnOpenMediaFailed(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnRunDeferredActions(WPARAM wParam, LPARAM lParam);
 
-    // Only reached in headless scan mode: with the dialog running these go to
-    // it instead, because DoTunerScan sends to the HWND it was handed.
-    afx_msg LRESULT OnHeadlessScanNewChannel(WPARAM wParam, LPARAM lParam);
-    afx_msg LRESULT OnHeadlessScanEnd(WPARAM wParam, LPARAM lParam);
     void OnFilePostClosemedia(bool bNextIsQueued = false);
 
     afx_msg void OnBossKey();
@@ -1102,7 +984,6 @@ public:
     afx_msg LRESULT OnCommandLineReceived(WPARAM wParam, LPARAM lParam);
     void ProcessCommandLine(CAtlList<CString>& cmdln, ULONGLONG tArrived);
     afx_msg void OnFileOpendvd();
-    afx_msg void OnFileOpendevice();
     afx_msg void OnFileOpenOpticalDisk(UINT nID);
     afx_msg void OnFileReopen();
     afx_msg void OnFileRecycle();
@@ -1132,9 +1013,7 @@ public:
     void SetCaptionState(MpcCaptionState eState);
     afx_msg void OnViewCaptionmenu();
 
-    afx_msg void OnViewNavigation();
     afx_msg void OnUpdateViewCaptionmenu(CCmdUI* pCmdUI);
-    afx_msg void OnUpdateViewNavigation(CCmdUI* pCmdUI);
     afx_msg void OnViewControlBar(UINT nID);
     afx_msg void OnUpdateViewControlBar(CCmdUI* pCmdUI);
     afx_msg void OnViewSubresync();
@@ -1152,8 +1031,6 @@ public:
     afx_msg void OnUpdateEDLNewClip(CCmdUI* pCmdUI);
     afx_msg void OnEDLSave();
     afx_msg void OnUpdateEDLSave(CCmdUI* pCmdUI);
-    afx_msg void OnViewCapture();
-    afx_msg void OnUpdateViewCapture(CCmdUI* pCmdUI);
     afx_msg void OnViewDebugShaders();
     afx_msg void OnUpdateViewDebugShaders(CCmdUI* pCmdUI);
     afx_msg void OnViewColorControls();
@@ -1342,8 +1219,6 @@ public:
     afx_msg void OnNavigateJumpTo(UINT nID);
     afx_msg void OnNavigateMenuItem(UINT nID);
     afx_msg void OnUpdateNavigateMenuItem(CCmdUI* pCmdUI);
-    afx_msg void OnTunerScan();
-    afx_msg void OnUpdateTunerScan(CCmdUI* pCmdUI);
 
     afx_msg void OnFavoritesAdd();
     afx_msg void OnUpdateFavoritesAdd(CCmdUI* pCmdUI);
@@ -1354,8 +1229,6 @@ public:
     afx_msg void OnUpdateFavoritesFile(CCmdUI* pCmdUI);
     afx_msg void OnFavoritesDVD(UINT nID);
     afx_msg void OnUpdateFavoritesDVD(CCmdUI* pCmdUI);
-    afx_msg void OnFavoritesDevice(UINT nID);
-    afx_msg void OnUpdateFavoritesDevice(CCmdUI* pCmdUI);
     afx_msg void OnRecentFileClear();
     afx_msg void OnUpdateRecentFileClear(CCmdUI* pCmdUI);
     afx_msg void OnRecentFile(UINT nID);
@@ -1395,8 +1268,6 @@ public:
     int         m_nCurSubtitle;
     long        m_lSubtitleShift;
     REFERENCE_TIME m_rtCurSubPos;
-    bool        m_bScanDlgOpened;
-    bool        m_bStopTunerScan;
     bool        m_bLockedZoomVideoWindow;
     int         m_nLockedZoomVideoWindow;
 

@@ -47,18 +47,3 @@ interface __declspec(uuid("43CDA93D-6A4E-4A07-BD3E-49D161073EE7"))
     STDMETHOD(GetDeadEnd)(int iIndex, CAtlList<CStringW>& path, CAtlList<CMediaType>& mts) PURE;
 };
 
-// private use only
-interface __declspec(uuid("546E72B3-66A1-4A58-A99B-56530B3E2FFF"))
-    IBDATuner :
-    public IUnknown
-{
-    STDMETHOD(SetChannel)(int nChannelPrefNumber) PURE;
-    STDMETHOD(SetAudio)(int nAudioIndex) PURE;
-    STDMETHOD(SetFrequency)(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate) PURE;
-    STDMETHOD(Scan)(ULONG ulFrequency, ULONG ulBandwidth, ULONG ulSymbolRate, HWND hWnd) PURE;
-    STDMETHOD(GetStats)(BOOLEAN& bPresent, BOOLEAN& bLocked, LONG& lDbStrength, LONG& lPercentQuality) PURE;
-    STDMETHOD(UpdatePSI)(const class CBDAChannel* pChannel, struct EventDescriptor& NowNext) PURE;
-    // ATSC and DVB differ in how their RF channels are laid out, so a scan has
-    // to know which it is dealing with rather than assuming a uniform raster.
-    STDMETHOD(IsATSC)(bool& bIsATSC) PURE;
-};

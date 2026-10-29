@@ -25,6 +25,8 @@
 #include "CMPCThemePPageBase.h"
 #include "../Subtitles/STS.h"
 #include "CMPCThemeSliderCtrl.h"
+#include "CMPCThemeSpinButtonCtrl.h"
+#include "FloatEdit.h"
 
 // CPPageSubStyle dialog
 
