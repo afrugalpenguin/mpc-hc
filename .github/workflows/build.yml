@@ -88,6 +88,13 @@ jobs:
             throw 'Errors log is not empty'
           }
 
+      # mpc-core unit tests (src/core/tests); a failed check makes the exe exit non-zero
+      - name: Run mpc-core tests
+        shell: pwsh
+        run: |
+          & bin\lib\Release_x64\mpc-core-tests.exe
+          if ($LASTEXITCODE -ne 0) { throw "mpc-core-tests failed (exit $LASTEXITCODE)" }
+
       - name: Upload logs
         if: always()
         uses: actions/upload-artifact@v4
