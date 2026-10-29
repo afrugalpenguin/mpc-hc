@@ -1,21 +1,70 @@
-# Media Player Classic - Home Cinema
+# Media Player Classic - Home Cinema (modernisation fork)
 
-Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. It is famous and loved for its simple and effective user interface, providing an excellent user experience. It offers a huge amount of functionality. Being a DirectShow player, it also allows flexibility and extensibility through third party filters.
+[![Build](https://github.com/afrugalpenguin/mpc-hc/actions/workflows/build.yml/badge.svg?branch=modernise)](https://github.com/afrugalpenguin/mpc-hc/actions/workflows/build.yml)
 
-## Development Status
+Media Player Classic - Home Cinema (MPC-HC) is a free and open-source video and audio player for Windows. Being a DirectShow player, it allows flexibility and extensibility through third party filters such as LAV Filters, madVR and MPC Video Renderer.
 
-The player is mature, stable, reliable, and already provides a huge amount of features.
+**This is a fork, not the official MPC-HC.** It is based on [clsid2/mpc-hc](https://github.com/clsid2/mpc-hc), the maintained MPC-HC 2.x line. For releases, downloads and support, use clsid2's project. Work here happens on the `modernise` branch.
 
-I currently do not accept any new feature requests. But that does not mean that the player is not getting any new features or other improvements. In fact, a huge amount of improvements have been made since I have taken over development in 2017.
+## What this fork is for
 
-There are three primary reasons why I currently do not accept any new feature requests:<br/>
-1) I and my fellow developers are too busy working on our own ideas and wishes for MPC-HC, and do not have any time or desire to work on other stuff.<br/>
-2) 90% of all requests are for functionality that is already available in the player, sometimes for over a decade, but users are too lazy/stupid to have a look at the options and player menus, or do a simple Internet search for help.<br/>
-3) For certain extra functionality there are already good solutions available. Such as an [equalizer](https://sourceforge.net/projects/equalizerapo/).
+The goal is to separate the playback engine from the window it lives in, then build a new shell on top of it:
 
-The internal codecs are developed in an external project ([LAV Filters](https://github.com/Nevcairiel/LAVFilters)). That project is actively maintained, and MPC-HC will be updated periodically with the latest codecs. Same applies to code/files from other external projects that are used by MPC-HC, such as MediaInfo.
+1. **Extract the engine.** Today the main window (`src/mpc-hc/MainFrm.cpp`, about 25k lines in one class) *is* the player. The graph lifecycle, renderer selection, subtitle pipeline and playback state move into a core library, `mpc-core`, one responsibility at a time. The existing MFC player keeps running on the extracted core throughout, so every step ships and nothing regresses silently.
+2. **Expose it through a flat C ABI**, testable without a window.
+3. **Build a new WinUI 3 (C#) shell** on that ABI, designed around discoverability: searchable settings, a command palette, sensible defaults. The current player has the features; users cannot find them.
 
-If you are a programmer and want to help improve MPC-HC, then you can do so by submitting a pull request containing your patches.
+Scope is core playback only: files, streams, DVD and Blu-ray folders, subtitles, audio tracks, pixel shaders and the playlist. The full reasoning and phase plan are in the [architecture decision record](docs/architecture-decision.md).
+
+## Status
+
+- **Phase 0 (baseline): done.** Verified build steps ([docs/Baseline-Build.md](docs/Baseline-Build.md)), CI on every pull request, out-of-scope subsystems removed, and the engine seam mapped ([docs/Engine-Seam.md](docs/Engine-Seam.md)).
+- **Phase 1 (engine extraction): in progress.** `mpc-core` exists as a static library with unit tests that run in CI; responsibilities are moving into it.
+- **Phase 2 (new shell): not started.**
+
+### Removed in this fork
+
+These were removed as out of scope; the options, menu items and command-line switches went with them:
+
+- The built-in HTTP web interface (`/webport`)
+- Digital (BDA/DVB) TV and analog capture: File > Open Device, the Capture options page, `/device`, `/dvbscan*`
+- The DSM, Matroska and WAV muxers (playing `.dsm` files is unaffected)
+- Logitech LCD support
+- The DoctorDump crash reporter (`/nocrashreporter` is still accepted and ignored)
+
+Stored settings for these are left untouched, so going back to an official build loses nothing.
+
+## Building
+
+See [docs/Compilation.md](docs/Compilation.md) for the full instructions and [docs/Baseline-Build.md](docs/Baseline-Build.md) for the exact, verified steps on Visual Studio 2022 Build Tools, including the deviations needed for a green build. In short, from PowerShell:
+
+```powershell
+git submodule update --init --recursive --jobs 4
+.\build.bat Build x64 MPCHC Release
+.\bin\lib\Release_x64\mpc-core-tests.exe   # mpc-core unit tests
+```
+
+The player ends up in `bin\mpc-hc_x64\mpc-hc64.exe`. To keep it from sharing settings with an installed MPC-HC, put an empty `mpc-hc64.ini` next to it (portable mode).
+
+## Repository layout
+
+| Path | What |
+|---|---|
+| `src/mpc-hc` | The MFC player (the shell, and for now most of the engine) |
+| `src/core` | `mpc-core`, the playback engine being extracted, and its tests (`src/core/tests`) |
+| `src/filters`, `src/DSUtil`, `src/SubPic`, `src/Subtitles` | DirectShow filters, utilities and the subtitle renderers |
+| `src/thirdparty` | Third-party code, mostly git submodules (LAV Filters, libass, ...) |
+| `docs` | Decision record, build notes, seam map |
+
+## Contributing
+
+- Work on a `feature/`, `fix/` or `chore/` branch and open a pull request against `modernise`; one concern per pull request.
+- Commit messages follow `type(scope): description` (conventional commits), subject line 72 characters or less.
+- CI must be green before merge. Changes that move code into `mpc-core` must leave the player's behaviour unchanged; if one cannot, say so in the pull request.
+
+## Upstream
+
+Most of what follows is clsid2's description of the player, still accurate for this fork apart from the removals above. The player has been maintained by clsid2 and contributors since 2017; the internal codecs come from [LAV Filters](https://github.com/Nevcairiel/LAVFilters). If you want a stable player rather than a work in progress, use [clsid2/mpc-hc](https://github.com/clsid2/mpc-hc).
 
 ## Overview of features
 
@@ -71,7 +120,7 @@ Note 3: [yt-dlp fork with Win7 support](https://github.com/nicolaasjan/yt-dlp/re
 
 ## System Requirements
 
-* Windows 7 / 8 / 8.1 / 10 / 11
+* Windows 7 / 8 / 8.1 / 10 / 11. Builds made with a Windows 10 SDK, as CI and [docs/Baseline-Build.md](docs/Baseline-Build.md) do, need Windows 7 SP1 or later.
 
 ## License
 
