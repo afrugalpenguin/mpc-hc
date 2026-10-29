@@ -231,7 +231,6 @@ IF %ERRORLEVEL% NEQ 0 (
 IF /I "%SIGN%" == "True" CALL :SubSign MPC-HC mpc-hc*.exe
 IF /I "%SIGN%" == "True" CALL :SubSign MPC-HC *.dll %LAVFILTERSDIR%
 IF /I "%SIGN%" == "True" CALL :SubSign MPC-HC *.ax %LAVFILTERSDIR%
-IF /I "%SIGN%" == "True" CALL :SubSign MPC-HC CrashReporterDialog.dll CrashReporter
 
 EXIT /B
 
@@ -441,13 +440,6 @@ IF /I "%NAME%" == "MPC-HC" (
   COPY /Y /V "..\src\mpc-hc\res\shaders\dx9\*.hlsl" "%PCKG_NAME%\Shaders" >NUL
   IF NOT EXIST "%PCKG_NAME%\Shaders11" MD "%PCKG_NAME%\Shaders11"
   COPY /Y /V "..\src\mpc-hc\res\shaders\dx11\*.hlsl" "%PCKG_NAME%\Shaders11" >NUL
-  IF /I "%BUILDCFG%" NEQ "Debug" IF /I "%BUILDCFG%" NEQ "Debug Lite" IF EXIST "%VS_OUT_DIR%\CrashReporter\crashrpt.dll" (
-    IF NOT EXIST "%PCKG_NAME%\CrashReporter" MD "%PCKG_NAME%\CrashReporter"
-    COPY /Y /V "%VS_OUT_DIR%\CrashReporter\crashrpt.dll"            "%PCKG_NAME%\CrashReporter"
-    COPY /Y /V "%VS_OUT_DIR%\CrashReporter\dbghelp.dll"             "%PCKG_NAME%\CrashReporter"
-    COPY /Y /V "%VS_OUT_DIR%\CrashReporter\sendrpt.exe"             "%PCKG_NAME%\CrashReporter"
-    COPY /Y /V "%VS_OUT_DIR%\CrashReporter\CrashReporterDialog.dll" "%PCKG_NAME%\CrashReporter"
-  )
 ) ELSE (
   COPY /Y /V "%VS_OUT_DIR%\*.ax"           "%PCKG_NAME%\*.ax" >NUL
   COPY /Y /V "%VS_OUT_DIR%\VSFilter.dll"   "%PCKG_NAME%\VSFilter.dll" >NUL

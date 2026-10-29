@@ -41,10 +41,6 @@
   #endif
 #endif
 
-#if GetEnv('MPC_DRDUMP') == '1'
-#define USE_DRDUMP_CRASH_REPORTER 1
-#endif
-
 ; From now on you shouldn't need to change anything
 
 #include "..\include\mpc-hc_config.h"
@@ -270,12 +266,6 @@ Source: ..\src\mpc-hc\res\shaders\dx11\*.hlsl;     DestDir: {app}\Shaders11;    
 Source: ..\distrib\Toolbars\*.*;                   DestDir: {app}\Toolbars;         Components: main;         Flags: onlyifdoesntexist recursesubdirs
 Source: ..\COPYING.txt;                            DestDir: {app};                  Components: main;         Flags: ignoreversion
 Source: ..\docs\Authors.txt;                       DestDir: {app};                  Components: main;         Flags: ignoreversion
-	#if USE_DRDUMP_CRASH_REPORTER
-Source: {#platform}\crashrpt.dll;                  DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
-Source: {#platform}\dbghelp.dll;                   DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
-Source: {#platform}\sendrpt.exe;                   DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
-Source: CrashReporter_LICENSE.txt;                 DestDir: {app}\CrashReporter;    Components: main;         Flags: ignoreversion
-	#endif
 
 
 [Icons]
@@ -303,9 +293,7 @@ Type: files; Name: {commondesktop}\{#app_name}.lnk; Check: not IsTaskSelected('d
 Type: files; Name: {#quick_launch}\{#app_name}.lnk; Check: not IsTaskSelected('quicklaunchicon')    and IsUpgrade(); OnlyBelowVersion: 6.01
 Type: files; Name: {app}\AUTHORS;                   Check: IsUpgrade()
 Type: files; Name: {app}\COPYING;                   Check: IsUpgrade()
-	#if !USE_DRDUMP_CRASH_REPORTER
 Type: filesandordirs; Name: {app}\CrashReporter;    Check: IsUpgrade()
-	#endif
 
 ; old shortcuts
 #ifdef x64Build

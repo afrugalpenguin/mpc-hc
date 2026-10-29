@@ -963,7 +963,6 @@ public:
     CString sYDLExePath;
     CString sYDLCommandLine;
 
-    bool bEnableCrashReporter;
 
     int nStreamPosPollerInterval;
     bool bShowLangInStatusbar;

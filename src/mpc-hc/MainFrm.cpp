@@ -55,7 +55,6 @@
 #include "PPageSubtitles.h"
 
 #include "CoverArt.h"
-#include "CrashReporter.h"
 #include "KeyProvider.h"
 #include "Translations.h"
 #include "UpdateChecker.h"
@@ -1408,11 +1407,6 @@ void CMainFrame::OnClose()
 
     if (m_OnClose_called) {
         ASSERT(false);
-        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER && (MPC_VERSION_REV > 10)
-        if (CrashReporter::IsEnabled()) {
-            throw 0xdead;
-        }
-        #endif
         return;
     }
 
@@ -2922,11 +2916,6 @@ LRESULT CMainFrame::OnDoOpenCurPlaylist(WPARAM wParam, LPARAM lParam)
 
     if (!CloseMediaBeforeOpen()) {
         ASSERT(false);
-#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER && (MPC_VERSION_REV > 10)
-        if (CrashReporter::IsEnabled()) {
-            throw 1;
-        }
-#endif
         return S_OK;
     }
     if (m_OnClose_queued) {
@@ -16316,11 +16305,6 @@ bool CMainFrame::OpenMediaPrivate(CAutoPtr<OpenMediaData> pOMD)
 
     if (m_pGB || m_ActiveGraphNotifyEvCode == EC_PAUSED || GetLoadState() != MLS::LOADING || m_OnClose_called || m_OnClose_queued) {
         ASSERT(false);
-        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-        if (CrashReporter::IsEnabled()) {
-            throw 0xdead;
-        }
-        #endif
         m_bOpenMediaActive = false;
         m_closingmsg = L"Aborted due to unexpected state";
         return false;
@@ -19584,11 +19568,6 @@ void CMainFrame::OpenMediaInternal(CAutoPtr<OpenMediaData> pOMD)
 
     if (m_ActiveGraphNotifyEvCode == EC_PAUSED || m_OnClose_called) {
         ASSERT(false);
-        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-        if (CrashReporter::IsEnabled()) {
-            throw 0xdead;
-        }
-        #endif
         return;
     }
     if (m_OnClose_queued) {
@@ -19657,11 +19636,6 @@ void CMainFrame::OpenMediaInternal(CAutoPtr<OpenMediaData> pOMD)
     }
 
     if (m_eMediaLoadState != MLS::CLOSED) {
-        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-        if (CrashReporter::IsEnabled()) {
-            throw 0xdead;
-        }
-        #endif
         return;
     }
 
@@ -19815,9 +19789,6 @@ void CMainFrame::ForceCloseProcess()
         PLAYER_LOG(_T("CMainFrame::ForceCloseProcess"));
         FLUSH_LOGGER();
     }
-    if (CrashReporter::IsEnabled()) {
-        CrashReporter::Disable();
-    }
     TerminateProcess(GetCurrentProcess(), 0xDEADBEEF);
 }
 
@@ -19828,11 +19799,6 @@ void CMainFrame::ThrowAndForceClose()
         PLAYER_LOG(_T("CMainFrame::ThrowAndForceClose"));
         FLUSH_LOGGER();
     }
-    #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-    if (CrashReporter::IsEnabled()) {
-        throw 0xdead;
-    }
-    #endif
     TerminateProcess(GetCurrentProcess(), 0xDEADBEEF);
 }
 
@@ -20141,13 +20107,6 @@ void CMainFrame::CloseMediaInternal(bool bNextIsQueued/* = false*/, bool bPendin
 
                         if (extendedwait || m_fFullScreen || s.hMasterWnd || hibernating || app_closing || m_OnClose_queued) {
                             processmsg = false;
-                            #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER && (MPC_VERSION_REV > 10)
-                            if (extendedwait && CrashReporter::IsEnabled()) {
-                                if (IDYES == AfxMessageBox(L"It looks like the filter graph might be deadlocked.\n\nClick YES to submit a crash report.\nClick NO to terminate the player process.\n\nIf you can reproduce this problem with a specific file, then please share details with the developers.", MB_ICONEXCLAMATION | MB_YESNO, 0)) {
-                                    throw 0xdead;
-                                }
-                            }
-                            #endif
                         } else {
                             CString timeoutmsg;
                             if (s.iDSVideoRendererType == VIDRNDT_DS_MADVR) {
@@ -20340,13 +20299,6 @@ void CMainFrame::CloseMediaInternal(bool bNextIsQueued/* = false*/, bool bPendin
                     }
 
                     if (extendedwait || m_fFullScreen || s.hMasterWnd || hibernating || app_closing || m_OnClose_queued) {
-                        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER && (MPC_VERSION_REV > 10)
-                        if (extendedwait && CrashReporter::IsEnabled()) {
-                            if (IDYES == AfxMessageBox(L"It looks like the filter graph might be deadlocked.\n\nClick YES to submit a crash report.\nClick NO to terminate the player process.\n\nIf you can reproduce this problem with a specific file, then please share details with the developers.", MB_ICONEXCLAMATION | MB_YESNO, 0)) {
-                                throw 0xdead;
-                            }
-                        }
-                        #endif
                         processmsg = false;
                     } else {
                         if (!m_pGB && !m_pGB_preview) {
@@ -20422,13 +20374,6 @@ void CMainFrame::SetLoadState(MLS eState)
             PLAYER_LOG(_T("CMainFrame::SetLoadState - unexpected state change: %d -> %d"), m_eMediaLoadState, eState);
             FLUSH_LOGGER();
         }
-        #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-        if (CrashReporter::IsEnabled()) {
-            if (GetCurrentThreadId() != AfxGetApp()->m_nThreadID) {
-                throw 0xdead;
-            }
-        }
-        #endif
     }
 
     m_eMediaLoadState = eState;

@@ -23,7 +23,6 @@
 #include "mplayerc.h"
 #include "AboutDlg.h"
 #include "CmdLineHelpDlg.h"
-#include "CrashReporter.h"
 #include "DSUtil.h"
 #include "FakeFilterMapper2.h"
 #include "FileAssoc.h"
@@ -2042,32 +2041,6 @@ BOOL WINAPI Mine_LockWindowUpdate(HWND hWndLock)
     }
 }
 
-BOOL RegQueryBoolValue(HKEY hKeyRoot, LPCWSTR lpSubKey, LPCWSTR lpValuename, BOOL defaultvalue) {
-    BOOL result = defaultvalue;
-    HKEY hKeyOpen;
-    DWORD rv = RegOpenKeyEx(hKeyRoot, lpSubKey, 0, KEY_READ, &hKeyOpen);
-    if (rv == ERROR_SUCCESS) {
-        DWORD data;
-        DWORD dwBufferSize = sizeof(DWORD);
-        rv = RegQueryValueEx(hKeyOpen, lpValuename, NULL, NULL, reinterpret_cast<LPBYTE>(&data), &dwBufferSize);
-        if (rv == ERROR_SUCCESS) {
-            result = (data > 0);
-        }
-        RegCloseKey(hKeyOpen);
-    }
-    return result;
-}
-
-#if USE_DRDUMP_CRASH_REPORTER
-void DisableCrashReporter()
-{
-    if (CrashReporter::IsEnabled()) {
-        CrashReporter::Disable();
-        MPCExceptionHandler::Enable();
-    }
-}
-#endif
-
 BOOL CMPlayerCApp::InitInstance()
 {
     // Remove the working directory from the search path to work around the DLL preloading vulnerability
@@ -2075,18 +2048,7 @@ BOOL CMPlayerCApp::InitInstance()
 
     // At this point we have not hooked this function yet so we get the real result
     if (!IsDebuggerPresent()) {
-#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-        if (RegQueryBoolValue(HKEY_CURRENT_USER, _T("Software\\MPC-HC\\MPC-HC\\Settings"), _T("EnableCrashReporter"), true)) {
-            CrashReporter::Enable();
-            if (!CrashReporter::IsEnabled()) {
-                MPCExceptionHandler::Enable();
-            }
-        } else {
-            MPCExceptionHandler::Enable();
-        }
-#else
         MPCExceptionHandler::Enable();
-#endif
     }
 
     if (!HeapSetInformation(nullptr, HeapEnableTerminationOnCorruption, nullptr, 0)) {
@@ -2379,16 +2341,6 @@ BOOL CMPlayerCApp::InitInstance()
     m_s->LoadSettings();    // read settings
     m_s->UpdateSettings();  // update settings
     CMPCThemeUtil::applyNativeMenuMode();
-
-    #if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-    if (m_s->bEnableCrashReporter) {
-        if (!CrashReporter::IsEnabled()) { // failed
-            m_s->bEnableCrashReporter = false;
-        }
-    } else {
-        DisableCrashReporter();
-    }
-    #endif
 
     m_AudioRendererDisplayName_CL = _T("");
 
@@ -2779,9 +2731,6 @@ void CMPlayerCApp::OnAppAbout()
 void CMPlayerCApp::SetClosingState()
 {
     m_fClosingState = true;
-#if USE_DRDUMP_CRASH_REPORTER & (MPC_VERSION_PATCH < 2) & (MPC_VERSION_REV < 10) & 0
-    DisableCrashReporter();
-#endif
 }
 
 void CMPlayerCApp::OnFileExit()
