@@ -96,13 +96,6 @@ CAppSettings::CAppSettings()
     , nLogoId(-1)
     , fLogoExternal(false)
     , fLogoColorProfileEnabled(false)
-    , fEnableWebServer(false)
-    , nWebServerPort(13579)
-    , nCmdlnWebServerPort(-1)
-    , fWebServerUseCompression(true)
-    , fWebServerLocalhostOnly(false)
-    , bWebUIEnablePreview(false)
-    , fWebServerPrintDebugInfo(false)
     , nVolume(100)
     , fMute(false)
     , nBalance(0)
@@ -1287,16 +1280,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_PRIORITY, dwPriority);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LAUNCHFULLSCREEN, fLaunchfullscreen);
 
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLEWEBSERVER, fEnableWebServer);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERPORT, nWebServerPort);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERUSECOMPRESSION, fWebServerUseCompression);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERLOCALHOSTONLY, fWebServerLocalhostOnly);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WEBUI_ENABLE_PREVIEW, bWebUIEnablePreview);
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERPRINTDEBUGINFO, fWebServerPrintDebugInfo);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_WEBROOT, strWebRoot);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_WEBDEFINDEX, strWebDefIndex);
-    pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_WEBSERVERCGI, strWebServerCGI);
-
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_SNAPSHOTPATH, strSnapshotPath);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_SNAPSHOTEXT, strSnapshotExt);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SNAPSHOTSUBTITLES, bSnapShotSubtitles);
@@ -2154,16 +2137,6 @@ void CAppSettings::LoadSettings()
     ::SetPriorityClass(::GetCurrentProcess(), dwPriority);
     fLaunchfullscreen = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LAUNCHFULLSCREEN, FALSE);
 
-    fEnableWebServer = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLEWEBSERVER, FALSE);
-    nWebServerPort = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERPORT, 13579);
-    fWebServerUseCompression = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERUSECOMPRESSION, TRUE);
-    fWebServerLocalhostOnly = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERLOCALHOSTONLY, FALSE);
-    bWebUIEnablePreview = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WEBUI_ENABLE_PREVIEW, FALSE);
-    fWebServerPrintDebugInfo = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_WEBSERVERPRINTDEBUGINFO, FALSE);
-    strWebRoot = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_WEBROOT, _T("*./webroot"));
-    strWebDefIndex = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_WEBDEFINDEX, _T("index.html;index.php"));
-    strWebServerCGI = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_WEBSERVERCGI);
-
     CString MyPictures;
     CRegKey key;
     if (ERROR_SUCCESS == key.Open(HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"), KEY_READ)) {
@@ -2929,11 +2902,6 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
                 nCLSwitches |= CLSW_MONITOR;
             } else if (sw == _T("pns") && pos) {
                 strPnSPreset = cmdln.GetNext(pos);
-            } else if (sw == _T("webport") && pos) {
-                int tmpport = _tcstol(cmdln.GetNext(pos), nullptr, 10);
-                if (tmpport >= 0 && tmpport <= 65535) {
-                    nCmdlnWebServerPort = tmpport;
-                }
             } else if (sw == _T("dvbscan") && pos) {
                 // /dvbscan <start>-<stop>, in kHz. Run a tuner scan without the
                 // scan dialog, write the result and quit. The range is required

@@ -37,7 +37,6 @@
 #include "RedirectWaitDlg.h"
 #include "Struct.h"
 #include "UpdateChecker.h"
-#include "WebServer.h"
 #include "WinAPIUtils.h"
 #include "mpc-hc_config.h"
 #include "zlib/minizip/zip.h"

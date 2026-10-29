@@ -88,7 +88,6 @@ void CPPageFileInfoRes::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPPageFileInfoRes, CMPCThemeResizablePropertyPage)
     ON_BN_CLICKED(IDC_BUTTON1, OnSaveAs)
     ON_UPDATE_COMMAND_UI(IDC_BUTTON1, OnUpdateSaveAs)
-    ON_NOTIFY(NM_DBLCLK, IDC_LIST1, OnOpenEmbeddedResInBrowser)
 END_MESSAGE_MAP()
 
 // CPPageFileInfoRes message handlers
@@ -159,22 +158,4 @@ void CPPageFileInfoRes::OnSaveAs()
 void CPPageFileInfoRes::OnUpdateSaveAs(CCmdUI* pCmdUI)
 {
     pCmdUI->Enable(m_list.GetSelectedCount());
-}
-
-void CPPageFileInfoRes::OnOpenEmbeddedResInBrowser(NMHDR* pNMHDR, LRESULT* pResult)
-{
-    int i = m_list.GetSelectionMark();
-    if (i >= 0) {
-        const CAppSettings& s = AfxGetAppSettings();
-
-        if (s.fEnableWebServer) {
-            const auto& r = m_res[m_list.GetItemData(i)];
-
-            CString url;
-            url.Format(_T("http://localhost:%d/viewres.html?id=%Ix"), s.nWebServerPort, reinterpret_cast<uintptr_t>(&r));
-            ShellExecute(nullptr, _T("open"), url, nullptr, nullptr, SW_SHOWDEFAULT);
-        } else {
-            AfxMessageBox(IDS_EMB_RESOURCES_VIEWER_INFO, MB_ICONINFORMATION);
-        }
-    }
 }

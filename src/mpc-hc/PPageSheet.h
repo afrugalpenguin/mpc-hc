@@ -34,7 +34,6 @@
 #include "PPageDVD.h"
 #include "PPageOutput.h"
 #include "PPageFullscreen.h"
-#include "PPageWebServer.h"
 #include "PPageInternalFilters.h"
 #include "PPageAudioSwitcher.h"
 #include "PPageExternalFilters.h"
@@ -99,7 +98,6 @@ private:
     CPPageAccelTbl m_acceltbl;
     CPPageMouse m_mouse;
     CPPageLogo m_logo;
-    CPPageWebServer m_webserver;
     CPPagePlayback m_playback;
     CPPageDVD m_dvd;
     CPPageOutput m_output;

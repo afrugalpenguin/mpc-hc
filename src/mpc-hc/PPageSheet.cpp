@@ -55,7 +55,6 @@ CPPageSheet::CPPageSheet(LPCTSTR pszCaption, IFilterGraph* pFG, CWnd* pParentWnd
     AddPage(&m_acceltbl);
 	AddPage(&m_mouse);
     AddPage(&m_logo);
-    AddPage(&m_webserver);
     AddPage(&m_playback);
     AddPage(&m_dvd);
     AddPage(&m_output);

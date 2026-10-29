@@ -61,7 +61,6 @@
 #include "KeyProvider.h"
 #include "Translations.h"
 #include "UpdateChecker.h"
-#include "WebServer.h"
 #include <ISOLang.h>
 #include <PathUtils.h>
 #include <DSUtil.h>
@@ -333,7 +332,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
     ON_MESSAGE(WM_POSTOPEN, OnFilePostOpenmedia)
     ON_MESSAGE(WM_OPENFAILED, OnOpenMediaFailed)
     ON_MESSAGE(WM_MPC_RUN_DEFERRED, OnRunDeferredActions)
-    ON_MESSAGE(WM_MPC_UI_REQUEST, OnUIRequest)
     ON_MESSAGE(WM_TUNER_NEW_CHANNEL, OnHeadlessScanNewChannel)
     ON_MESSAGE(WM_TUNER_SCAN_END, OnHeadlessScanEnd)
     ON_MESSAGE(WM_DVB_EIT_DATA_READY, OnCurrentChannelInfoUpdated)
@@ -1176,14 +1174,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
     //m_wndSubtitlesUploadDialog.Create(m_wndSubtitlesUploadDialog.IDD, this);
     m_wndFavoriteOrganizeDialog.Create(m_wndFavoriteOrganizeDialog.IDD, this);
 
-    if (s.nCmdlnWebServerPort != 0) {
-        if (s.nCmdlnWebServerPort > 0) {
-            StartWebServer(s.nCmdlnWebServerPort);
-        } else if (s.fEnableWebServer) {
-            StartWebServer(s.nWebServerPort);
-        }
-    }
-
     m_bToggleShader = s.bToggleShader;
     m_bToggleShaderScreenSpace = s.bToggleShaderScreenSpace;
     OpenSetupWindowTitle(true);
@@ -1425,18 +1415,6 @@ bool CMainFrame::DeferIfNested(DeferredActionType type, std::function<void()> ac
         ::EndMenu();
     }
     return true;
-}
-
-// A sent message is dispatched wherever this thread next retrieves one, which
-// includes the waits on the graph thread while a file opens or closes; the
-// builders only read the lists while the load state is LOADED, and that state
-// changes on this thread, so nothing is read while the graph thread rewrites it.
-LRESULT CMainFrame::OnUIRequest(WPARAM wParam, LPARAM lParam)
-{
-    auto pRequest = reinterpret_cast<UIRequest*>(lParam);
-    pRequest->build(this, pRequest->body);
-    pRequest->Release();
-    return 0;
 }
 
 void CMainFrame::OnClose()
@@ -20884,20 +20862,6 @@ void CMainFrame::ShowOptions(int idPage/* = 0*/)
         default:
             ASSERT(iRes != CPPageSheet::APPLY_UI_CHANGE);
             break;
-    }
-}
-
-void CMainFrame::StartWebServer(int nPort)
-{
-    if (!m_pWebServer) {
-        m_pWebServer.Attach(DEBUG_NEW CWebServer(this, nPort));
-    }
-}
-
-void CMainFrame::StopWebServer()
-{
-    if (m_pWebServer) {
-        m_pWebServer.Free();
     }
 }
 
