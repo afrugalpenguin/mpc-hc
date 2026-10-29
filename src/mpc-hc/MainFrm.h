@@ -50,6 +50,7 @@
 #include "MediaTransControls.h"
 #include "FavoriteOrganizeDlg.h"
 #include "AllocatorCommon.h"
+#include "../core/Engine.h"
 #include <deque>
 #include <functional>
 #include <optional>
@@ -730,6 +731,8 @@ protected:
 
     friend class SubtitlesProviders;
     std::unique_ptr<SubtitlesProviders> m_pSubtitlesProviders;
+    // playback engine being extracted into mpc-core (docs/architecture-decision.md, phase 1)
+    std::unique_ptr<mpc::core::IEngine> m_pEngine = mpc::core::CreateEngine();
     friend struct SubtitlesInfo;
     friend class SubtitlesTask;
     friend class SubtitlesThread;
