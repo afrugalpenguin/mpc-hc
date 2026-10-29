@@ -35,7 +35,12 @@ jobs:
       # See docs/Baseline-Build.md. The 8.1 SDK that src/platform.props defaults to is not on
       # the runner, so use the newest installed Windows 10/11 SDK. Visual Studio is found by
       # common.bat's vswhere lookup.
-      - name: Write build.user.bat
+      #
+      # The runner's PATH is long enough that, once vsdevcmd has added to it, lines in the
+      # build scripts that expand %PATH% exceed cmd's 8191-character limit ("The input line
+      # is too long", seen in LAV Filters' genversion.cmd). Build with a short PATH holding
+      # only what the build calls: system tools, Git, Python with polib, and NASM.
+      - name: Write build.user.bat and build PATH
         shell: pwsh
         run: |
           $sdk = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -Directory |
@@ -47,12 +52,29 @@ jobs:
             '@ECHO OFF'
             "SET `"MPCHC_WINSDK_VER=$sdk`""
             'SET "MPCHC_LAV_TOOLCHAIN=MSVC"'
-            'SET "PATH=%ProgramFiles%\NASM;%PATH%"'
           )
+
+          $python = Split-Path (Get-Command python).Source
+          $git = Split-Path (Get-Command git).Source
+          $buildPath = @(
+            "$env:SystemRoot\System32", $env:SystemRoot, "$env:SystemRoot\System32\Wbem",
+            "$env:SystemRoot\System32\WindowsPowerShell\v1.0",
+            $git, $python, "$python\Scripts", "$env:ProgramFiles\NASM"
+          ) -join ';'
+          foreach ($tool in 'nasm.exe', 'git.exe', 'python.exe') {
+            if (-not ($buildPath -split ';' | Where-Object { Test-Path (Join-Path $_ $tool) })) {
+              throw "$tool is not on the build PATH"
+            }
+          }
+          Write-Host "Build PATH ($($buildPath.Length) chars): $buildPath"
+          Set-Content "$env:RUNNER_TEMP\build-path.txt" -Encoding ascii -Value $buildPath
 
       - name: Build
         shell: cmd
-        run: build.bat Build x64 MPCHC Release Silent Nocolors
+        run: |
+          set /p BUILD_PATH=<"%RUNNER_TEMP%\build-path.txt"
+          set "PATH=%BUILD_PATH%"
+          build.bat Build x64 MPCHC Release Silent Nocolors
 
       - name: Check outputs
         shell: pwsh
