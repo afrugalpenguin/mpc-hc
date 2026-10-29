@@ -30,6 +30,7 @@
 #include "PathUtils.h"
 #include "SVGImage.h"
 #include "ImageGrayer.h"
+#include "../core/AudioLevels.h"
 #include "CMPCTheme.h"
 #include "stb/stb_image.h"
 #include "stb/deprecated/stb_image_resize2.h"
@@ -713,14 +714,7 @@ bool CPlayerToolBar::IsMuted() const
 
 int CPlayerToolBar::GetVolume() const
 {
-    int volume = m_volctrl.GetPos(); // [0..100]
-    if (IsMuted() || volume <= 0) {
-        volume = -10000;
-    } else {
-        volume = std::min((int)(4000 * log10(volume / 100.0f)), 0); // 4000=2.0*100*20, where 2.0 is a special factor
-    }
-
-    return volume;
+    return mpc::core::VolumeToDirectShow(m_volctrl.GetPos(), IsMuted()); // slider is [0..100]
 }
 
 int CPlayerToolBar::GetMinWidth() const

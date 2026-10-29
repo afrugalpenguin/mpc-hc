@@ -49,6 +49,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioLevelsTests.cpp" />
     <ClCompile Include="EngineTests.cpp" />
     <ClCompile Include="TestMain.cpp" />
   </ItemGroup>
