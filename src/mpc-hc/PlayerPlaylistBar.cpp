@@ -975,7 +975,7 @@ bool CPlayerPlaylistBar::ParseMPCPlayList(CString fn)
                 if (std::find(idx.begin(), idx.end(), i) == idx.end()) {
                     idx.push_back(i); // only once, a repeated "type" line must not add the item twice
                 }
-                if (_ttol(value) != CPlaylistItem::file) {
+                if (_ttol(value) == 1) {
                     skipped.push_back(i);
                 }
             } else if (key == _T("label")) {

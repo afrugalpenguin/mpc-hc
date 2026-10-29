@@ -19417,23 +19417,6 @@ void CMainFrame::CleanGraph()
     EndEnumFilters;
 }
 
-#define AUDIOBUFFERLEN 500
-
-static void SetLatency(IBaseFilter* pBF, int cbBuffer)
-{
-    BeginEnumPins(pBF, pEP, pPin) {
-        if (CComQIPtr<IAMBufferNegotiation> pAMBN = pPin) {
-            ALLOCATOR_PROPERTIES ap;
-            ap.cbAlign = -1;  // -1 means no preference.
-            ap.cbBuffer = cbBuffer;
-            ap.cbPrefix = -1;
-            ap.cBuffers = -1;
-            pAMBN->SuggestAllocatorProperties(&ap);
-        }
-    }
-    EndEnumPins;
-}
-
 //
 
 void CMainFrame::ShowOptions(int idPage/* = 0*/)
