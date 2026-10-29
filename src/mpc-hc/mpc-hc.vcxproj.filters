@@ -28,9 +28,6 @@
     <Filter Include="Integration">
       <UniqueIdentifier>{aa019fb8-debd-45de-af25-ab3d5e22a7f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Integration\Logitech LCD">
-      <UniqueIdentifier>{c65b298e-e9cf-447f-a27a-1d30b7bd7d81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Panels">
       <UniqueIdentifier>{6c92dae3-76cc-449a-aa1d-f6d72742e757}</UniqueIdentifier>
     </Filter>
@@ -156,9 +153,6 @@
     </ClCompile>
     <ClCompile Include="Ifo.cpp">
       <Filter>Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="LcdSupport.cpp">
-      <Filter>Integration\Logitech LCD</Filter>
     </ClCompile>
     <ClCompile Include="MediaFormats.cpp">
       <Filter>Player Config</Filter>
@@ -681,9 +675,6 @@
     </ClInclude>
     <ClInclude Include="InternalFiltersConfig.h">
       <Filter>Player Config</Filter>
-    </ClInclude>
-    <ClInclude Include="LcdSupport.h">
-      <Filter>Integration\Logitech LCD</Filter>
     </ClInclude>
     <ClInclude Include="MediaFormats.h">
       <Filter>Player Config</Filter>

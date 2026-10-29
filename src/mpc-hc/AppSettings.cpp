@@ -188,7 +188,6 @@ CAppSettings::CAppSettings()
     , fShowChapters(true)
     , fPreventMinimize(false)
     , bUseEnhancedTaskBar(true)
-    , fLCDSupport(false)
     , fSeekPreview(false)
     , iSeekPreviewSize(15)
     , fUseSearchInFolder(false)
@@ -1158,7 +1157,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_FASTSEEK_METHOD, eFastSeekMethod);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_CHAPTERS, fShowChapters);
 
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_LCD_SUPPORT, fLCDSupport);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW, fSeekPreview);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW_SIZE, iSeekPreviewSize);
@@ -2145,7 +2143,6 @@ void CAppSettings::LoadSettings()
     fShowChapters         = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_CHAPTERS, TRUE);
 
 
-    fLCDSupport = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_LCD_SUPPORT, FALSE);
 
     fSeekPreview = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW, FALSE);
     iSeekPreviewSize = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SEEKPREVIEW_SIZE, 15);

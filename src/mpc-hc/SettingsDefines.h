@@ -310,7 +310,6 @@
 #define IDS_RS_FASTSEEK_METHOD              _T("FastSeekMethod")
 #define IDS_RS_SHOW_CHAPTERS                _T("ShowChapters")
 
-#define IDS_RS_LCD_SUPPORT                  _T("LcdSupport")
 
 #define IDS_RS_SEEKPREVIEW                    _T("UseSeekPreview")
 #define IDS_RS_SEEKPREVIEW_SIZE               _T("SeekPreviewSize")

@@ -38,7 +38,6 @@ CPPageTweaks::CPPageTweaks()
     , m_fUseSearchInFolder(FALSE)
     , m_bHideWindowedMousePointer(TRUE)
     , m_fFastSeek(FALSE)
-    , m_fLCDSupport(FALSE)
 {
 }
 
@@ -56,7 +55,6 @@ void CPPageTweaks::DoDataExchange(CDataExchange* pDX)
     DDX_Check(pDX, IDC_CHECK7, m_fUseSearchInFolder);
     DDX_Control(pDX, IDC_COMBO4, m_FastSeekMethod);
     DDX_Check(pDX, IDC_FASTSEEK_CHECK, m_fFastSeek);
-    DDX_Check(pDX, IDC_CHECK_LCD, m_fLCDSupport);
     DDX_Check(pDX, IDC_CHECK3, m_bHideWindowedMousePointer);
 }
 
@@ -83,8 +81,6 @@ BOOL CPPageTweaks::OnInitDialog()
     m_FastSeekMethod.SetCurSel(s.eFastSeekMethod);
     m_bHideWindowedMousePointer = s.bHideWindowedMousePointer;
 
-    m_fLCDSupport = s.fLCDSupport;
-
     CreateToolTip();
     EnableThemedDialogTooltips(this);
 
@@ -109,8 +105,6 @@ BOOL CPPageTweaks::OnApply()
 
     s.bHideWindowedMousePointer = !!m_bHideWindowedMousePointer;
 
-
-    s.fLCDSupport = !!m_fLCDSupport;
 
     s.bFastSeek = !!m_fFastSeek;
     s.eFastSeekMethod = static_cast<decltype(s.eFastSeekMethod)>(m_FastSeekMethod.GetCurSel());
