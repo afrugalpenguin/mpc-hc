@@ -58,6 +58,7 @@
 #include "KeyProvider.h"
 #include "Translations.h"
 #include "UpdateChecker.h"
+#include "../core/AudioLevels.h"
 #include <ISOLang.h>
 #include <PathUtils.h>
 #include <DSUtil.h>
@@ -14073,18 +14074,10 @@ void CMainFrame::SetShaders(bool bSetPreResize/* = true*/, bool bSetPostResize/*
 
 void CMainFrame::SetBalance(int balance)
 {
-    int sign = balance > 0 ? -1 : 1; // -1: invert sign for more right channel
-    int balance_dB;
-    if (balance > -100 && balance < 100) {
-        balance_dB = sign * (int)(100 * 20 * log10(1 - abs(balance) / 100.0f));
-    } else {
-        balance_dB = sign * (-10000);  // -10000: only left, 10000: only right
-    }
-
     if (GetLoadState() == MLS::LOADED) {
         CString strBalance, strBalanceOSD;
 
-        m_pBA->put_Balance(balance_dB);
+        m_pBA->put_Balance(mpc::core::BalanceToDirectShow(balance));
 
         if (balance == 0) {
             strBalance.LoadString(IDS_BALANCE);
@@ -15528,16 +15521,7 @@ void CMainFrame::OpenSetupAudio()
     m_pBA->put_Volume(m_wndToolBar.Volume);
 
     // FIXME
-    int balance = AfxGetAppSettings().nBalance;
-
-    int sign = balance > 0 ? -1 : 1; // -1: invert sign for more right channel
-    if (balance > -100 && balance < 100) {
-        balance = sign * (int)(100 * 20 * log10(1 - abs(balance) / 100.0f));
-    } else {
-        balance = sign * (-10000);  // -10000: only left, 10000: only right
-    }
-
-    m_pBA->put_Balance(balance);
+    m_pBA->put_Balance(mpc::core::BalanceToDirectShow(AfxGetAppSettings().nBalance));
 }
 
 void CMainFrame::OpenSetupInfoBar(bool bClear /*= true*/)
