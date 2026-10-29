@@ -59,9 +59,6 @@
     <Filter Include="Main View">
       <UniqueIdentifier>{0453474a-2716-4c52-b5f4-cf6bd9e31ed0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Crash Reporter">
-      <UniqueIdentifier>{1d73f7db-64e8-4bc8-b0ca-72847253f467}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Subtitles">
       <UniqueIdentifier>{20afe682-61a3-4123-9012-4c918a03f482}</UniqueIdentifier>
     </Filter>
@@ -384,9 +381,6 @@
     </ClCompile>
     <ClCompile Include="ShellDropTarget.cpp">
       <Filter>Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="CrashReporter.cpp">
-      <Filter>Crash Reporter</Filter>
     </ClCompile>
     <ClCompile Include="PPageAudioRenderer.cpp">
       <Filter>Property Dialogs\Player Options\Pages</Filter>
@@ -931,9 +925,6 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="CrashReporter.h">
-      <Filter>Crash Reporter</Filter>
     </ClInclude>
     <ClInclude Include="PPageAudioRenderer.h">
       <Filter>Property Dialogs\Player Options\Pages</Filter>

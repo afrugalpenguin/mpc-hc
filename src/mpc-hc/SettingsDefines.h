@@ -383,7 +383,6 @@
 #define IDS_RS_YDL_EXEPATH                  _T("YDLExePath")
 #define IDS_RS_YDL_COMMAND_LINE             _T("YDLCommandLine")
 
-#define IDS_RS_ENABLE_CRASH_REPORTER        _T("EnableCrashReporter")
 
 #define IDS_LAST_QUICKOPEN_PATH             _T("LastQuickOpenPath")
 #define IDS_LAST_FILESAVECOPY_PATH          _T("LastFileSaveCopyPath")

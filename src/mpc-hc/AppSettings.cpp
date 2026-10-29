@@ -21,7 +21,6 @@
 
 #include "stdafx.h"
 #include "AppSettings.h"
-#include "CrashReporter.h"
 #include "FGFilter.h"
 #include "FakeFilterMapper2.h"
 #include "FileAssoc.h"
@@ -250,7 +249,6 @@ CAppSettings::CAppSettings()
     , sYDLCommandLine(_T(""))
     , bSnapShotSubtitles(true)
     , bSnapShotKeepVideoExtension(true)
-    , bEnableCrashReporter(true)
     , nStreamPosPollerInterval(100)
     , bShowLangInStatusbar(false)
     , bShowFPSInStatusbar(false)
@@ -1335,7 +1333,6 @@ void CAppSettings::SaveSettings(bool write_full_history /* = false */)
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_EXEPATH, sYDLExePath);
     pApp->WriteProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, sYDLCommandLine);
 
-    pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, bEnableCrashReporter);
 
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, nStreamPosPollerInterval);
     pApp->WriteProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, bShowLangInStatusbar);
@@ -2244,7 +2241,6 @@ void CAppSettings::LoadSettings()
     sYDLExePath     = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_EXEPATH, _T(""));
     sYDLCommandLine = pApp->GetProfileString(IDS_R_SETTINGS, IDS_RS_YDL_COMMAND_LINE, _T(""));
 
-    bEnableCrashReporter = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_ENABLE_CRASH_REPORTER, TRUE);
 
     nStreamPosPollerInterval = pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_TIME_REFRESH_INTERVAL, 100);
     bShowLangInStatusbar = !!pApp->GetProfileInt(IDS_R_SETTINGS, IDS_RS_SHOW_LANG_STATUSBAR, FALSE);
@@ -2787,12 +2783,7 @@ void CAppSettings::ParseCommandLine(CAtlList<CString>& cmdln)
             } else if (sw == _T("debug")) {
                 fShowDebugInfo = true;
             } else if (sw == _T("nocrashreporter")) {
-#if USE_DRDUMP_CRASH_REPORTER
-                if (CrashReporter::IsEnabled()) {
-                    CrashReporter::Disable();
-                    MPCExceptionHandler::Enable();
-                }
-#endif
+                // still accepted so existing launchers keep working; there is no crash reporter any more
             } else if (sw == _T("audiorenderer") && pos) {
                 SetAudioRenderer(_ttoi(cmdln.GetNext(pos)));
             } else if (sw == _T("shaderpreset") && pos) {

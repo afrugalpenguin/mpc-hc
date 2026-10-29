@@ -42,10 +42,6 @@
 
 #define USE_LIBASS 1
 
-#ifndef USE_DRDUMP_CRASH_REPORTER
-#define USE_DRDUMP_CRASH_REPORTER 0
-#endif
-
 #define SHADERS_DIR _T("Shaders")
 #define SHADERS_DIR11 _T("Shaders11")
 #define SHADERS_EXT _T(".hlsl")

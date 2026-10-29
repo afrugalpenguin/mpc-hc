@@ -35,7 +35,6 @@ _*.bat
 /src/MPCTestAPI/bin
 /src/MPCTestAPI/bin17
 /src/MPCTestAPI/.vs
-/src/thirdparty/DoctorDump/obj
 /src/thirdparty/LAVFilters/obj
 /src/thirdparty/libxml2/generated/libxml/xmlversion.h
 ipch

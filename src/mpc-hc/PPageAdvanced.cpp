@@ -25,7 +25,6 @@
 #include "EventDispatcher.h"
 #include <strsafe.h>
 #include "VersionHelpersInternal.h"
-#include "CrashReporter.h"
 #include "ExceptionHandler.h"
 
 IMPLEMENT_DYNAMIC(CPPageAdvanced, CMPCThemePPageBase)
@@ -221,9 +220,6 @@ void CPPageAdvanced::InitSettings()
     addBoolItem(USE_AUTOMATIC_CAPTIONS, IDS_RS_USE_AUTOMATIC_CAPTIONS, false, s.bUseAutomaticCaptions, StrRes(IDS_PPAGEADVANCED_USE_AUTOMATIC_CAPTIONS));
 
     addHeaderItem(ResStr(IDS_PPAGEADVANCED_GRP_MISC));
-#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-    addBoolItem(CRASHREPORTER, IDS_RS_ENABLE_CRASH_REPORTER, true, s.bEnableCrashReporter, StrRes(IDS_PPAGEADVANCED_CRASHREPORTER));
-#endif
     addIntItem(LOGGING, IDS_RS_LOGGING, 0, s.DebugLogMask, std::make_pair(0, 31), StrRes(IDS_PPAGEADVANCED_LOGGER));
 }
 
@@ -332,13 +328,6 @@ BOOL CPPageAdvanced::OnApply()
     if (s.iModernThemeStyle != oldModernThemeStyle || s.bWin11NativeMenus != oldWin11NativeMenus) {
         m_eventc.FireEvent(MpcEvent::CHANGING_THEME);
     }
-
-#if !defined(_DEBUG) && USE_DRDUMP_CRASH_REPORTER
-    if (!s.bEnableCrashReporter && CrashReporter::IsEnabled()) {
-        CrashReporter::Disable();
-        MPCExceptionHandler::Enable();
-    }
-#endif
 
     // There is no main frame when the option dialog is displayed stand-alone
     if (CMainFrame* pMainFrame = AfxGetMainFrame()) {
