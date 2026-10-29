@@ -1,0 +1,106 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [modernise]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  x64-release:
+    name: x64 Release
+    runs-on: windows-2022
+    timeout-minutes: 90
+    steps:
+      # Full history so update_version.bat can count commits since the last tag.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Fetch submodules
+        run: git submodule update --init --recursive --jobs 4
+
+      - name: Install NASM and polib
+        run: |
+          choco install nasm --no-progress -y
+          python -m pip install --disable-pip-version-check polib
+
+      # See docs/Baseline-Build.md. The 8.1 SDK that src/platform.props defaults to is not on
+      # the runner, so use the newest installed Windows 10/11 SDK. Visual Studio is found by
+      # common.bat's vswhere lookup.
+      #
+      # The runner's PATH is long enough that, once vsdevcmd has added to it, lines in the
+      # build scripts that expand %PATH% exceed cmd's 8191-character limit ("The input line
+      # is too long", seen in LAV Filters' genversion.cmd). Build with a short PATH holding
+      # only what the build calls: system tools, Git, Python with polib, and NASM.
+      - name: Write build.user.bat and build PATH
+        shell: pwsh
+        run: |
+          $sdk = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -Directory |
+            Where-Object Name -Match '^10\.0\.\d+\.\d+$' |
+            Sort-Object { [version]$_.Name } | Select-Object -Last 1 -ExpandProperty Name
+          if (-not $sdk) { throw 'No Windows 10/11 SDK found' }
+          Write-Host "Windows SDK: $sdk"
+          Set-Content build.user.bat -Encoding ascii -Value @(
+            '@ECHO OFF'
+            "SET `"MPCHC_WINSDK_VER=$sdk`""
+            'SET "MPCHC_LAV_TOOLCHAIN=MSVC"'
+          )
+
+          $python = Split-Path (Get-Command python).Source
+          $git = Split-Path (Get-Command git).Source
+          $buildPath = @(
+            "$env:SystemRoot\System32", $env:SystemRoot, "$env:SystemRoot\System32\Wbem",
+            "$env:SystemRoot\System32\WindowsPowerShell\v1.0",
+            $git, $python, "$python\Scripts", "$env:ProgramFiles\NASM"
+          ) -join ';'
+          foreach ($tool in 'nasm.exe', 'git.exe', 'python.exe') {
+            if (-not ($buildPath -split ';' | Where-Object { Test-Path (Join-Path $_ $tool) })) {
+              throw "$tool is not on the build PATH"
+            }
+          }
+          Write-Host "Build PATH ($($buildPath.Length) chars): $buildPath"
+          Set-Content "$env:RUNNER_TEMP\build-path.txt" -Encoding ascii -Value $buildPath
+
+      - name: Build
+        shell: cmd
+        run: |
+          set /p BUILD_PATH=<"%RUNNER_TEMP%\build-path.txt"
+          set "PATH=%BUILD_PATH%"
+          build.bat Build x64 MPCHC Release Silent Nocolors
+
+      - name: Check outputs
+        shell: pwsh
+        run: |
+          $files = 'mpc-hc64.exe', 'mpciconlib.dll',
+            'LAVFilters64\LAVAudio.ax', 'LAVFilters64\LAVVideo.ax', 'LAVFilters64\LAVSplitter.ax'
+          $missing = $files | Where-Object { -not (Test-Path "bin\mpc-hc_x64\$_") }
+          if ($missing) { throw "Missing build outputs: $($missing -join ', ')" }
+          if ((Get-Item bin\logs\mpc-hc_errors_Release_x64.log).Length -gt 0) {
+            Get-Content bin\logs\mpc-hc_errors_Release_x64.log
+            throw 'Errors log is not empty'
+          }
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-x64-release
+          path: bin/logs/
+          if-no-files-found: ignore
+
+      - name: Upload binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: mpc-hc-x64-release
+          path: |
+            bin/mpc-hc_x64/
+            !bin/mpc-hc_x64/**/*.pdb
+          retention-days: 14
