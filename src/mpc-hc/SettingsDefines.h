@@ -121,7 +121,6 @@
 #define IDS_RS_PREVENT_DISPLAY_SLEEP        _T("PreventDisplaySleep")
 #define IDS_RS_USE_SMTC                     _T("UseSMTC")
 #define IDS_RS_RELOAD_AFTER_LONG_PAUSE      _T("ReloadAfterLongPause")
-#define IDS_RS_OPEN_REC_PANEL_WHEN_OPENING_DEVICE _T("OpenRecordingPanelWhenOpeningDevice")
 #define IDS_RS_REDIRECT_OPEN_TO_APPEND_THRESHOLD _T("RedirectOpenToAppendThreshold")
 #define IDS_RS_FULLSCREEN_SEPARATE_CONTROLS _T("FullscreenSeparateControls")
 #define IDS_RS_ALWAYS_USE_SHORT_MENU        _T("AlwaysUseShortMenu")
@@ -130,7 +129,6 @@
 #define IDS_RS_MOUSE_LEFTUP_DELAY           _T("MouseLeftUpDelay")
 #define IDS_RS_USE_FREETYPE                 _T("UseFreetype")
 #define IDS_RS_USE_MEDIAINFO_LOAD_FILE_DURATION _T("UseMediainfoLoadFileDuration")
-#define IDS_RS_CAPTURE_DEINTERLACE          _T("CaptureDeinterlace")
 #define IDS_RS_PAUSE_WHILE_DRAGGING_SEEKBAR _T("PauseWhileDraggingSeekbar")
 #define IDS_RS_PAUSE_WHEN_MINIMIZED         _T("PauseWhenMinimized")
 #define IDS_RS_CONFIRM_FILE_DELETE          _T("ConfirmFileDelete")
@@ -213,8 +211,6 @@
 #define IDS_RS_LASTWINDOWRECT               _T("LastWindowRect")
 #define IDS_RS_AUDIORENDERERTYPE            _T("AudioRendererType")
 #define IDS_RS_HIDECAPTIONMENU              _T("HideCaptionMenu")
-#define IDS_RS_HIDENAVIGATION               _T("HideNavigation")
-#define IDS_RS_HIDECAPTURESETTINGS          _T("HideCaptureSettings")
 #define IDS_RS_DEFAULTVIDEOFRAME            _T("DefaultVideoFrame")
 #define IDS_RS_REMEMBERWINDOWSIZE           _T("RememberWindowSize")
 #define IDS_RS_PANSCANZOOM                  _T("PanScanZoom")
@@ -307,37 +303,6 @@
 #define IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_MODE_DM_SIZEX        _T("SizeX")
 #define IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_MODE_DM_SIZEY        _T("SizeY")
 #define IDS_RS_FULLSCREEN_AUTOCHANGE_MODE_MODE_DM_FLAGS        _T("Flags")
-
-#define IDS_RS_DEFAULT_CAPTURE              _T("DefaultCapture")
-#define IDS_R_CAPTURE                       _T("Capture")
-#define IDS_RS_VIDEO_DISP_NAME              _T("VidDispName")
-#define IDS_RS_AUDIO_DISP_NAME              _T("AudDispName")
-#define IDS_RS_COUNTRY                      _T("Country")
-
-#define IDS_R_DVB                           _T("DVBConfiguration")
-// Replacement section for the DVB settings (same pattern as Commands2 and
-// FileFormats2), which old builds never read or write. The channel
-// serialization carries a format-version token and an older build THROWS on a
-// newer token, drops the channel, and — since channels are rewritten on every
-// save — destroys the newer list just by running. The legacy section is left
-// frozen so a downgrade keeps its own last-known-good DVB settings. A sibling
-// key (not a subkey of the legacy section) also keeps the legacy section a
-// plain leaf key, which old builds clear with MFC's non-recursive RegDeleteKey.
-#define IDS_R_DVB2                          _T("DVBConfiguration2")
-//#define IDS_RS_BDA_NETWORKPROVIDER          _T("BDANetworkProvider")
-#define IDS_RS_BDA_TUNER                    _T("BDATuner")
-#define IDS_RS_BDA_RECEIVER                 _T("BDAReceiver")
-#define IDS_RS_BDA_STANDARD                 _T("BDAStandard")
-#define IDS_RS_BDA_SCAN_FREQ_START          _T("BDAScanFreqStart")
-#define IDS_RS_BDA_SCAN_FREQ_END            _T("BDAScanFreqEnd")
-#define IDS_RS_BDA_BANDWIDTH                _T("BDABandWidth")
-#define IDS_RS_BDA_SYMBOLRATE               _T("BDASymbolRate")
-#define IDS_RS_BDA_USE_OFFSET               _T("BDAUseOffset")
-#define IDS_RS_BDA_OFFSET                   _T("BDAOffset")
-#define IDS_RS_BDA_IGNORE_ENCRYPTED_CHANNELS _T("BDAIgnoreEncryptedChannels")
-#define IDS_RS_DVB_LAST_CHANNEL             _T("LastChannel")
-#define IDS_RS_DVB_REBUILD_FG               _T("RebuildFilterGraph")
-#define IDS_RS_DVB_STOP_FG                  _T("StopFilterGraph")
 
 #define IDS_RS_D3D9RENDERDEVICE             _T("D3D9RenderDevice")
 

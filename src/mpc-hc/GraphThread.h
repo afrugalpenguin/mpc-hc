@@ -40,7 +40,6 @@ public:
         TM_OPEN,
         TM_CLOSE,
         TM_RESET,
-        TM_TUNER_SCAN,
         TM_DISPLAY_CHANGE
     };
 
@@ -51,7 +50,6 @@ protected:
     afx_msg void OnExit(WPARAM wParam, LPARAM lParam);
     afx_msg void OnOpen(WPARAM wParam, LPARAM lParam);
     afx_msg void OnReset(WPARAM wParam, LPARAM lParam);
-    afx_msg void OnTunerScan(WPARAM wParam, LPARAM lParam);
 
 private:
     CMainFrame* m_pMainFrame = nullptr;

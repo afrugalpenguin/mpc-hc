@@ -193,12 +193,6 @@ public:
 	CFGManagerDVD(LPCWSTR pInputFileURL, HWND hWnd, bool IsPreview = false);
 };
 
-class CFGManagerCapture : public CFGManagerPlayer
-{
-public:
-    CFGManagerCapture(HWND hWnd);
-};
-
 //
 
 class CFGAggregator : public CUnknown

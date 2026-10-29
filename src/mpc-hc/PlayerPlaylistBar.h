@@ -198,8 +198,6 @@ public:
     void AddSubtitleToCurrent(CString fn);
 
     void OpenDVD(CString fn);
-    void Open(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
-    void Append(CStringW vdn, CStringW adn, int vinput, int vchannel, int ainput);
 
     OpenMediaData* GetCurOMD(REFERENCE_TIME rtStart = 0, ABRepeat abRepeat = ABRepeat());
 

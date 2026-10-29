@@ -37,10 +37,6 @@ CPlaylistItem::CPlaylistItem(bool is_copy /*= false*/)
     , m_type(file)
     , m_duration(0)
     , m_filetime(0)
-    , m_vinput(-1)
-    , m_vchannel(-1)
-    , m_ainput(-1)
-    , m_country(0)
     , m_fns()
     , m_subs()
     , m_fInvalid(false)
@@ -84,10 +80,6 @@ CPlaylistItem& CPlaylistItem::operator=(const CPlaylistItem& pli)
         m_fInvalid = pli.m_fInvalid;
         m_duration = pli.m_duration;
         m_filetime = pli.m_filetime;
-        m_vinput = pli.m_vinput;
-        m_vchannel = pli.m_vchannel;
-        m_ainput = pli.m_ainput;
-        m_country = pli.m_country;
         m_posNextShuffle = pli.m_posNextShuffle;
         m_posPrevShuffle = pli.m_posPrevShuffle;
         m_cue = pli.m_cue;
@@ -144,8 +136,6 @@ CString CPlaylistItem::GetLabel(int i)
 
                 str.Format(_T("%02d:%02d:%02d"), hh, mm, ss);
             }
-        } else if (m_type == device) {
-            // TODO
         }
 
     }

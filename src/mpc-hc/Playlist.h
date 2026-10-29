@@ -38,13 +38,10 @@ public:
     CString m_label;
     CAtlList<CString> m_fns;
     CAtlList<CString> m_subs;
-    enum type_t { file, device } m_type;
+    enum type_t { file } m_type;
     REFERENCE_TIME m_duration;
     ULONGLONG m_filetime; // file creation time; 0 = not checked yet, 1 = unavailable (missing file or URL)
     int inlineEditMaxWidth;
-    int m_vinput, m_vchannel;
-    int m_ainput;
-    long m_country;
     bool m_cue;
     CString m_cue_filename;
     int m_cue_index;

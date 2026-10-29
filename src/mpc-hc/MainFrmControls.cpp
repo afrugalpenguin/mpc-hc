@@ -39,10 +39,6 @@ UINT CMainFrameControls::GetEffectiveToolbarsSelection()
 {
     const auto& s = AfxGetAppSettings();
     UINT ret = s.nCS;
-    if (m_pMainFrame->GetPlaybackMode() == PM_DIGITAL_CAPTURE
-            || m_pMainFrame->GetPlaybackMode() == PM_ANALOG_CAPTURE) {
-        ret &= ~CS_SEEKBAR;
-    }
     if (m_pMainFrame->IsStatusBarForcedForMessage()) {
         ret |= CS_STATUSBAR; // temporarily reveal the status bar to show a message (issue #3256)
     }

@@ -23,6 +23,7 @@
 
 #include "../Subtitles/STS.h"
 #include "CMPCThemePPageBase.h"
+#include "CMPCThemeSpinButtonCtrl.h"
 
 
 // CPPageSubtitles dialog

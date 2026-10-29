@@ -44,6 +44,7 @@
 #include "winddk/ntddcdvd.h"
 #include <afxsock.h>
 #include <atlsync.h>
+#include <dvdmedia.h>
 #include <winternl.h>
 #include <regex>
 #include "ExceptionHandler.h"
@@ -878,10 +879,8 @@ void CMPlayerCApp::SetupSettingsStore()
 {
     // The store stays at its historical location (HKCU\Software\MPC-HC\MPC-HC or
     // <exe>.ini) so external tools and older builds keep reading it unchanged.
-    // Scalar settings evolve additively; the one format-fragile composite field
-    // (saved DVB channels) moved to a replacement section (DVBConfiguration2)
-    // at its own call sites, so no store-wide format/migration machinery is
-    // needed here.
+    // Scalar settings evolve additively, so no store-wide format/migration
+    // machinery is needed here.
     //
     // MediaHistory is the one structural change: in portable (INI) mode it moves
     // to a separate file; in registry mode it stays inside the settings key.

@@ -205,11 +205,9 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="CrashReporter.cpp" />
     <ClCompile Include="CShockwaveFlash.cpp" />
     <ClCompile Include="DebugShadersDlg.cpp" />
-    <ClCompile Include="DeinterlacerFilter.cpp" />
     <ClCompile Include="DpiAwareResizableDialog.cpp" />
     <ClCompile Include="DpiHelper.cpp" />
     <ClCompile Include="DragRectWnd.cpp" />
-    <ClCompile Include="DVBChannel.cpp" />
     <ClCompile Include="EditListEditor.cpp" />
     <ClCompile Include="EditWithButton.cpp" />
     <ClCompile Include="EventDispatcher.cpp" />
@@ -220,11 +218,9 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="FGFilter.cpp" />
     <ClCompile Include="FGFilterLAV.cpp" />
     <ClCompile Include="FGManager.cpp" />
-    <ClCompile Include="FGManagerBDA.cpp" />
     <ClCompile Include="FileAssoc.cpp" />
     <ClCompile Include="DropTarget.cpp" />
     <ClCompile Include="ShellDropTarget.cpp" />
-    <ClCompile Include="FreeviewEPGDecode.cpp" />
     <ClCompile Include="GPUInfo.cpp" />
     <ClCompile Include="ImageGrayer.cpp" />
     <ClCompile Include="MainFrmControls.cpp" />
@@ -245,7 +241,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="MouseWndWithArtView.cpp" />
     <ClCompile Include="MPCFolderPickerDialog.cpp" />
     <ClCompile Include="MPCPngImage.cpp" />
-    <ClCompile Include="Mpeg2SectionData.cpp" />
     <ClCompile Include="mplayerc.cpp" />
     <ClCompile Include="MultiMonitor.cpp" />
     <ClCompile Include="OpenDirHelper.cpp" />
@@ -254,12 +249,8 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="OSD.cpp" />
     <ClCompile Include="PlayerBar.cpp" />
     <ClCompile Include="PlayerBarDockContext.cpp" />
-    <ClCompile Include="PlayerCaptureBar.cpp" />
-    <ClCompile Include="PlayerCaptureDialog.cpp" />
     <ClCompile Include="PlayerInfoBar.cpp" />
     <ClCompile Include="PlayerListCtrl.cpp" />
-    <ClCompile Include="PlayerNavigationBar.cpp" />
-    <ClCompile Include="PlayerNavigationDialog.cpp" />
     <ClCompile Include="PlayerPlaylistBar.cpp" />
     <ClCompile Include="PlayerPreView.cpp" />
     <ClCompile Include="PlayerSeekBar.cpp" />
@@ -274,7 +265,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="PPageAudioRenderer.cpp" />
     <ClCompile Include="PPageAudioSwitcher.cpp" />
     <ClCompile Include="PPageBase.cpp" />
-    <ClCompile Include="PPageCapture.cpp" />
     <ClCompile Include="PPageDVD.cpp" />
     <ClCompile Include="PPageExternalFilters.cpp" />
     <ClCompile Include="PPageFileInfoClip.cpp" />
@@ -326,7 +316,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClCompile Include="SubtitlesProviders.cpp" />
     <ClCompile Include="SubtitlesProvidersUtils.cpp" />
     <ClCompile Include="TextPassThruFilter.cpp" />
-    <ClCompile Include="TunerScanDlg.cpp" />
     <ClCompile Include="UpdateChecker.cpp" />
     <ClCompile Include="UpdateCheckerDlg.cpp" />
     <ClCompile Include="VersionInfo.cpp" />
@@ -406,11 +395,9 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="CrashReporter.h" />
     <ClInclude Include="CShockwaveFlash.h" />
     <ClInclude Include="DebugShadersDlg.h" />
-    <ClInclude Include="DeinterlacerFilter.h" />
     <ClInclude Include="DpiAwareResizableDialog.h" />
     <ClInclude Include="DpiHelper.h" />
     <ClInclude Include="DragRectWnd.h" />
-    <ClInclude Include="DVBChannel.h" />
     <ClInclude Include="EditListEditor.h" />
     <ClInclude Include="EditWithButton.h" />
     <ClInclude Include="EventDispatcher.h" />
@@ -421,13 +408,11 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="FGFilter.h" />
     <ClInclude Include="FGFilterLAV.h" />
     <ClInclude Include="FGManager.h" />
-    <ClInclude Include="FGManagerBDA.h" />
     <ClInclude Include="FileAssoc.h" />
     <ClInclude Include="DropTarget.h" />
     <ClInclude Include="ShellDropTarget.h" />
     <ClInclude Include="FilterEnum.h" />
     <ClInclude Include="FloatEdit.h" />
-    <ClInclude Include="FreeviewEPGDecode.h" />
     <ClInclude Include="FullscreenWnd.h" />
     <ClInclude Include="GoToDlg.h" />
     <ClInclude Include="GPUInfo.h" />
@@ -453,7 +438,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="MpcApi.h" />
     <ClInclude Include="MPCFolderPickerDialog.h" />
     <ClInclude Include="MPCPngImage.h" />
-    <ClInclude Include="Mpeg2SectionData.h" />
     <ClInclude Include="mplayerc.h" />
     <ClInclude Include="Profile.h" />
     <ClInclude Include="MultiMonitor.h" />
@@ -463,12 +447,8 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="OSD.h" />
     <ClInclude Include="PlayerBar.h" />
     <ClInclude Include="PlayerBarDockContext.h" />
-    <ClInclude Include="PlayerCaptureBar.h" />
-    <ClInclude Include="PlayerCaptureDialog.h" />
     <ClInclude Include="PlayerInfoBar.h" />
     <ClInclude Include="PlayerListCtrl.h" />
-    <ClInclude Include="PlayerNavigationBar.h" />
-    <ClInclude Include="PlayerNavigationDialog.h" />
     <ClInclude Include="PlayerPlaylistBar.h" />
     <ClInclude Include="PlayerPreView.h" />
     <ClInclude Include="PlayerSeekBar.h" />
@@ -482,7 +462,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="PPageAudioRenderer.h" />
     <ClInclude Include="PPageAudioSwitcher.h" />
     <ClInclude Include="PPageBase.h" />
-    <ClInclude Include="PPageCapture.h" />
     <ClInclude Include="PPageDVD.h" />
     <ClInclude Include="PPageExternalFilters.h" />
     <ClInclude Include="PPageFileInfoClip.h" />
@@ -535,7 +514,6 @@ if not exist "$(OutDir)LAVFilters" if exist "$(SolutionDir)bin\mpc-hc_x86\LAVFil
     <ClInclude Include="TextPassThruFilter.h" />
     <ClInclude Include="TimerWrappers.h" />
     <ClInclude Include="Translations.h" />
-    <ClInclude Include="TunerScanDlg.h" />
     <ClInclude Include="..\..\include\version.h" />
     <ClInclude Include="UpdateChecker.h" />
     <ClInclude Include="UpdateCheckerDlg.h" />

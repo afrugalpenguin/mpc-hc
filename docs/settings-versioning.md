@@ -59,6 +59,12 @@ old and new builds interoperating on scalars.
 
 ## Downgrade protection — `DVBConfiguration2`
 
+> **Removed in this fork.** BDA/DVB support was removed (issue #7), so this build
+> no longer reads or writes `DVBConfiguration` or `DVBConfiguration2`. Both
+> sections are left untouched in existing stores, so a downgrade still finds
+> them. The rest of this section is kept as the record of why
+> `DVBConfiguration2` exists.
+
 The sweep found exactly **one** value that needs physical separation: the saved
 DVB channels. Their serialization is pipe-delimited with a leading
 format-version token, and it has changed shape repeatedly (tokens 0…6 so far);
@@ -146,7 +152,6 @@ tied to any format version.
 
 - Store: `HKCU\Software\MPC-HC\MPC-HC` / `<exe>.ini` (unchanged location, A-P binary)
 - `CProfile` — the store engine; `AfxGetProfile()` reaches the app's instance
-- `IDS_R_DVB2` = `DVBConfiguration2` (`SettingsDefines.h`) — downgrade-protected replacement section for the DVB settings (`BDASymbolRate` probe with default `-1` detects first run after upgrade)
 - `[Version] HistorySplit = 1` — MediaHistory split-done marker
 - `CAppSettings::MigrateSettings()` + `[Settings] SettingsVersion` (`IDS_R_VERSION`) — pre-existing scalar migration (unchanged)
 - `CMPlayerCApp::SetupSettingsStore()` / `SetupHistoryStore()` / `ApplySettingsPolicies()`
